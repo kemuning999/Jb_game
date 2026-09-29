@@ -15,6 +15,8 @@ class User extends Authenticatable implements FilamentUser
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+/**rapippp */
+
     /**
      * The attributes that are mass assignable.
      *
