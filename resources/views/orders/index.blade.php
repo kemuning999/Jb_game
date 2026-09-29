@@ -1,20 +1,20 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-white">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="mb-8">
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Pesanan Saya</h1>
-        <p class="text-slate-600 text-sm mt-1">Daftar semua akun game yang pernah Anda beli di JB GAME.</p>
+        <p class="text-slate-500 text-sm mt-1">Daftar semua akun game yang pernah Anda beli di JB GAME.</p>
     </div>
 
     @if($orders->isEmpty())
-        <div class="text-center py-20 bg-slate-50 rounded-3xl border border-slate-200">
+        <div class="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-xs">
             <svg class="w-16 h-16 text-slate-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-            <h3 class="text-xl font-bold text-slate-800">Belum Ada Riwayat Pesanan</h3>
+            <h3 class="text-xl font-bold text-slate-900">Belum Ada Riwayat Pesanan</h3>
             <p class="text-slate-500 text-sm mt-1">Anda belum pernah melakukan pembelian akun game.</p>
-            <a href="{{ route('products.index') }}" class="inline-block mt-5 px-6 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition">
+            <a href="{{ route('products.index') }}" class="inline-block mt-5 px-6 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition">
                 Mulai Belanja Akun
             </a>
         </div>
@@ -22,7 +22,7 @@
         <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm text-slate-700">
-                    <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-600 border-b border-slate-200">
+                    <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500 border-b border-slate-200">
                         <tr>
                             <th class="py-4 px-6">No. Order</th>
                             <th class="py-4 px-6">Akun Game</th>
@@ -35,17 +35,17 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         @foreach($orders as $order)
-                            <tr class="hover:bg-slate-50 transition">
+                            <tr class="hover:bg-slate-50/80 transition">
                                 <td class="py-4 px-6 font-mono font-bold text-slate-900">
                                     {{ $order->order_number }}
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden shrink-0">
+                                        <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0">
                                             @if($order->product->thumbnail)
                                                 <img src="{{ asset('storage/' . $order->product->thumbnail) }}" alt="{{ $order->product->title }}" class="w-full h-full object-cover">
                                             @else
-                                                <div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">Foto</div>
+                                                <div class="w-full h-full flex items-center justify-center text-slate-400 font-bold text-[10px]">Foto</div>
                                             @endif
                                         </div>
                                         <div class="min-w-0">
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-4 px-6 font-extrabold text-emerald-600">
+                                <td class="py-4 px-6 font-extrabold text-indigo-600">
                                     {{ $order->formatted_total }}
                                 </td>
                                 <td class="py-4 px-6">
