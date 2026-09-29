@@ -11,6 +11,57 @@ use Tests\TestCase;
 
 class JbGameRoutesTest extends TestCase
 {
+    use RefreshDatabase;
+
+    protected User $user;
+    protected Category $category;
+    protected Product $product;
+    protected Order $paidOrder;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create([
+            'role' => 'customer',
+            'name' => 'Test Customer',
+            'email' => 'customer@jbgame.com',
+            'phone' => '081234567890',
+        ]);
+
+        $this->category = Category::create([
+            'name' => 'Mobile Legends',
+            'slug' => 'mobile-legends',
+            'icon' => 'gamepad',
+            'is_active' => true,
+        ]);
+
+        $this->product = Product::create([
+            'category_id' => $this->category->id,
+            'title' => 'Akun MLBB Mythic Glory 100 Stars',
+            'slug' => 'akun-mlbb-mythic-glory-100-stars',
+            'price' => 500000,
+            'status' => 'available',
+            'description' => 'Akun sultan full skin collector & legend.',
+            'account_details' => 'Level 80, Winrate 68%, Hero 120, Skin 350.',
+            'account_username' => 'mlbb_secret_user',
+            'account_password' => 'mlbb_secret_pass',
+            'login_method' => 'Moonton',
+        ]);
+
+        $this->paidOrder = Order::create([
+            'order_number' => 'JB-TEST-PAID-001',
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+            'buyer_name' => $this->user->name,
+            'buyer_email' => $this->user->email,
+            'buyer_phone' => $this->user->phone,
+            'total_amount' => $this->product->price,
+            'payment_status' => 'paid',
+            'order_status' => 'completed',
+        ]);
+    }
+
     public function test_homepage_loads_successfully(): void
     {
         $response = $this->get('/');
@@ -28,72 +79,57 @@ class JbGameRoutesTest extends TestCase
 
     public function test_product_detail_page_loads_and_does_not_leak_credentials(): void
     {
-        $product = Product::where('status', 'available')->first();
-        $this->assertNotNull($product);
-
-        $response = $this->get('/products/' . $product->slug);
+        $response = $this->get('/products/' . $this->product->slug);
         $response->assertStatus(200);
-        $response->assertSee($product->title);
+        $response->assertSee($this->product->title);
         $response->assertSee('Beli Sekarang');
 
         // Verify sensitive credentials are NOT rendered in the public view
-        $response->assertDontSee($product->account_password);
-        $response->assertDontSee($product->account_username);
+        $response->assertDontSee($this->product->account_password);
+        $response->assertDontSee($this->product->account_username);
     }
 
     public function test_guest_is_redirected_when_accessing_checkout(): void
     {
-        $product = Product::where('status', 'available')->first();
-        $response = $this->get('/checkout/' . $product->slug);
+        $response = $this->get('/checkout/' . $this->product->slug);
         $response->assertRedirect('/login');
     }
 
     public function test_authenticated_user_can_access_checkout(): void
     {
-        $user = User::where('role', 'customer')->first();
-        $product = Product::where('status', 'available')->first();
-
-        $response = $this->actingAs($user)->get('/checkout/' . $product->slug);
+        $response = $this->actingAs($this->user)->get('/checkout/' . $this->product->slug);
         $response->assertStatus(200);
         $response->assertSee('Checkout Pesanan');
-        $response->assertSee($product->title);
+        $response->assertSee($this->product->title);
     }
 
     public function test_paid_order_reveals_credentials_to_owner(): void
     {
-        $order = Order::where('payment_status', 'paid')->first();
-        $this->assertNotNull($order);
-
-        $owner = $order->user;
-        $response = $this->actingAs($owner)->get('/orders/' . $order->order_number);
+        $response = $this->actingAs($this->user)->get('/orders/' . $this->paidOrder->order_number);
         $response->assertStatus(200);
         $response->assertSee('Data Kredensial Akun Game');
         $response->assertSee('Username / ID / Email Login:');
-        $response->assertSee($order->product->account_username);
+        $response->assertSee($this->product->account_username);
     }
 
     public function test_other_user_cannot_access_order(): void
     {
-        $order = Order::where('payment_status', 'paid')->first();
         $otherUser = User::factory()->create(['role' => 'customer']);
 
-        $response = $this->actingAs($otherUser)->get('/orders/' . $order->order_number);
+        $response = $this->actingAs($otherUser)->get('/orders/' . $this->paidOrder->order_number);
         $response->assertStatus(403);
     }
 
     public function test_midtrans_webhook_marks_order_as_paid_and_product_as_sold(): void
     {
-        $user = User::where('role', 'customer')->first();
-        $product = Product::where('status', 'available')->first();
-
         $order = Order::create([
             'order_number' => 'JB-TEST-' . time(),
-            'user_id' => $user->id,
-            'product_id' => $product->id,
-            'buyer_name' => $user->name,
-            'buyer_email' => $user->email,
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+            'buyer_name' => $this->user->name,
+            'buyer_email' => $this->user->email,
             'buyer_phone' => '081234567890',
-            'total_amount' => $product->price,
+            'total_amount' => $this->product->price,
             'payment_status' => 'pending',
             'order_status' => 'pending',
         ]);
@@ -112,10 +148,10 @@ class JbGameRoutesTest extends TestCase
         $response->assertStatus(200);
 
         $order->refresh();
-        $product->refresh();
+        $this->product->refresh();
 
         $this->assertEquals('paid', $order->payment_status);
         $this->assertEquals('completed', $order->order_status);
-        $this->assertEquals('sold', $product->status);
+        $this->assertEquals('sold', $this->product->status);
     }
 }
