@@ -28,9 +28,36 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('ANDRA JB')
+            ->brandLogo(fn () => view('filament.brand-logo'))
+            ->brandLogoHeight('2.5rem')
+            ->font(
+                'Inter',
+                url: asset('fonts/filament/filament/inter/index.css'),
+                provider: \Filament\FontProviders\LocalFontProvider::class,
+            )
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+                'gray' => Color::Slate,
             ])
+            ->navigationGroups([
+                'Etalase Toko',
+                'Penjualan',
+                'Pengaturan Akses',
+            ])
+            ->renderHook('panels::head.end', fn () => new \Illuminate\Support\HtmlString('
+                <style>
+                    .brand-title-text { color: #0f172a; }
+                    .dark .brand-title-text { color: #f8fafc !important; }
+                    .footer-brand-text { color: #334155; }
+                    .dark .footer-brand-text { color: #cbd5e1 !important; }
+                    .fi-logo { display: inline-flex !important; align-items: center !important; }
+                    .fi-logo svg, .fi-logo img { max-height: 2.5rem !important; }
+                    .fi-sidebar-header { min-height: 4rem; display: flex; align-items: center; }
+                </style>
+            '))
+            ->renderHook('panels::footer', fn () => view('filament.custom-footer'))
+            ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

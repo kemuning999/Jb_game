@@ -31,8 +31,8 @@
             <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start space-x-3">
                 <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0">2</div>
                 <div class="text-xs">
-                    <strong class="text-slate-900 block font-bold mb-1">Payment Gateway Terdaftar</strong>
-                    Semua transaksi melewati Midtrans resmi yang terawasi dan aman.
+                    <strong class="text-slate-900 block font-bold mb-1">Pembayaran QRIS Resmi</strong>
+                    Semua transaksi melewati QRIS resmi berstandar Bank Indonesia yang terawasi, otomatis, dan aman.
                 </div>
             </div>
             <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start space-x-3">

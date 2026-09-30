@@ -42,6 +42,15 @@ class Product extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::creating(function ($product) {
+            if (empty($product->slug) && !empty($product->title)) {
+                $product->slug = \Illuminate\Support\Str::slug($product->title) . '-' . \Illuminate\Support\Str::random(4);
+            }
+        });
+    }
+
     public function scopeAvailable(Builder $query): Builder
     {
         return $query->where('status', 'available');

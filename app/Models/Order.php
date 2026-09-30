@@ -21,6 +21,12 @@ class Order extends Model
         'total_amount',
         'payment_status',
         'order_status',
+        'payment_gateway',
+        'qris_transaction_id',
+        'qris_url',
+        'qris_image',
+        'payment_url',
+        'qris_expires_at',
         'snap_token',
         'payment_type',
         'paid_at',
@@ -32,6 +38,7 @@ class Order extends Model
         return [
             'total_amount' => 'decimal:2',
             'paid_at' => 'datetime',
+            'qris_expires_at' => 'datetime',
         ];
     }
 

@@ -4,7 +4,7 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="mb-8">
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Pesanan Saya</h1>
-        <p class="text-slate-500 text-sm mt-1">Daftar semua akun game yang pernah Anda beli di JB GAME.</p>
+        <p class="text-slate-500 text-sm mt-1">Daftar semua akun game yang pernah Anda beli di ANDRA JB.</p>
     </div>
 
     @if($orders->isEmpty())

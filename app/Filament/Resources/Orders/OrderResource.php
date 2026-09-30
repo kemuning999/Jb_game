@@ -20,6 +20,12 @@ class OrderResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $navigationLabel = 'Pesanan & Transaksi';
+    protected static ?string $modelLabel = 'Pesanan';
+    protected static ?string $pluralModelLabel = 'Daftar Pesanan';
+    protected static string|\UnitEnum|null $navigationGroup = 'Penjualan';
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return OrderForm::configure($schema);

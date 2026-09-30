@@ -8,4 +8,13 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateProduct extends CreateRecord
 {
     protected static string $resource = ProductResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        if (empty($data['seller_id']) && auth()->check()) {
+            $data['seller_id'] = auth()->id();
+        }
+
+        return $data;
+    }
 }

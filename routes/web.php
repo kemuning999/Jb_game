@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\BuatQrisController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -16,9 +16,8 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('produc
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 
-// Midtrans Webhook (Excluded from CSRF in bootstrap/app.php)
-Route::post('/midtrans/webhook', [MidtransWebhookController::class, 'handle'])->name('midtrans.webhook');
-Route::post('/midtrans/callback', [MidtransWebhookController::class, 'handle'])->name('midtrans.callback');
+// BuatQris Webhook (Excluded from CSRF in bootstrap/app.php)
+Route::post('/buatqris/webhook', [BuatQrisController::class, 'handleWebhook'])->name('buatqris.webhook');
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
@@ -30,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order_number}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/{order_number}/status', [OrderController::class, 'checkStatus'])->name('orders.status');
+    Route::post('/orders/{order_number}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/orders/{order_number}/simulate-pay', [BuatQrisController::class, 'simulatePay'])->name('orders.simulate-pay');
 
     // Dashboard redirects to orders
     Route::get('/dashboard', function () {

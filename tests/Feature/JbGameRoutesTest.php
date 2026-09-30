@@ -66,7 +66,7 @@ class JbGameRoutesTest extends TestCase
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-        $response->assertSee('JB GAME');
+        $response->assertSee('ANDRA JB');
         $response->assertSee('Kategori');
     }
 
@@ -120,10 +120,11 @@ class JbGameRoutesTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_midtrans_webhook_marks_order_as_paid_and_product_as_sold(): void
+    public function test_buatqris_webhook_marks_order_as_paid_and_product_as_sold(): void
     {
+        $txId = 'BQ-TEST-' . time();
         $order = Order::create([
-            'order_number' => 'JB-TEST-' . time(),
+            'order_number' => 'AJB-TEST-' . time(),
             'user_id' => $this->user->id,
             'product_id' => $this->product->id,
             'buyer_name' => $this->user->name,
@@ -132,19 +133,17 @@ class JbGameRoutesTest extends TestCase
             'total_amount' => $this->product->price,
             'payment_status' => 'pending',
             'order_status' => 'pending',
+            'qris_transaction_id' => $txId,
         ]);
 
         $payload = [
-            'order_id' => $order->order_number,
-            'status_code' => '200',
-            'gross_amount' => (string) (int) $order->total_amount,
-            'transaction_status' => 'settlement',
-            'payment_type' => 'qris',
-            'transaction_id' => 'midtrans-test-' . time(),
-            'transaction_time' => now()->toDateTimeString(),
+            'transaction_id' => $txId,
+            'status' => 'success',
+            'event' => 'payment.success',
+            'amount' => (int) $order->total_amount,
         ];
 
-        $response = $this->postJson('/midtrans/webhook', $payload);
+        $response = $this->postJson('/buatqris/webhook', $payload);
         $response->assertStatus(200);
 
         $order->refresh();

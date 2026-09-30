@@ -99,7 +99,7 @@
                         </div>
                         <div class="flex items-center justify-between text-slate-600">
                             <span>Metode Pembayaran</span>
-                            <span class="font-bold text-indigo-600">QRIS / Midtrans</span>
+                            <span class="font-bold text-indigo-600">QRIS Realtime</span>
                         </div>
                         <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-sm">
                             <span class="font-bold text-slate-900">Total Pembayaran</span>
@@ -116,7 +116,7 @@
                     </button>
 
                     <p class="text-[11px] text-center text-slate-500">
-                        Dengan melanjutkan pembayaran, Anda menyetujui syarat & ketentuan garansi akun JB GAME.
+                        Dengan melanjutkan pembayaran, Anda menyetujui syarat & ketentuan garansi akun ANDRA JB.
                     </p>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'JB GAME' }} - Jual Beli Akun Game Aman & Terpercaya</title>
+    <title>{{ $title ?? 'ANDRA JB' }} - Jual Beli Akun Game Aman & Terpercaya</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +14,6 @@
 
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Midtrans Snap Script -->
-    <script src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
 
     <style>
         body {
@@ -27,6 +24,9 @@
     @stack('styles')
 </head>
 <body class="flex flex-col min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+    <!-- Cinematic White Splash Screen with Logo JB Morph Transition -->
+    <x-jb-splash />
+
     <!-- Navbar -->
     <header x-data="{ mobileMenu: false, userDropdown: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,17 +34,17 @@
                 <!-- Brand / Logo -->
                 <div class="flex items-center space-x-3">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
-                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 flex items-center justify-center shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
-                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                            </svg>
+                        <div id="navbar-logo-badge" class="w-11 h-11 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-center justify-center p-2 group-hover:scale-105 group-hover:border-slate-300 transition-all duration-200">
+                            <div class="w-full h-full text-slate-950 flex items-center justify-center">
+                                <x-jb-logo />
+                            </div>
                         </div>
-                        <div>
+                        <div id="navbar-brand-text">
                             <span class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
-                                JB GAME
-                                <span class="w-2 h-2 rounded-full bg-cyan-500 inline-block"></span>
+                                ANDRA JB
+                                <span class="w-2 h-2 rounded-full bg-indigo-600 inline-block"></span>
                             </span>
-                            <span class="block text-[10px] uppercase font-bold tracking-widest text-indigo-600">Store Akun Resmi</span>
+                            <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-500">Official Marketplace</span>
                         </div>
                     </a>
                 </div>
@@ -244,12 +244,12 @@
                 <!-- Col 1: About -->
                 <div class="space-y-4 md:col-span-2">
                     <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center shadow-xs">
-                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                            </svg>
+                        <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1.5 shadow-xs">
+                            <div class="w-full h-full text-slate-950 flex items-center justify-center">
+                                <x-jb-logo />
+                            </div>
                         </div>
-                        <span class="text-xl font-extrabold tracking-tight text-slate-900">JB GAME</span>
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900">ANDRA JB</span>
                     </div>
                     <p class="text-slate-600 text-sm leading-relaxed max-w-md">
                         Platform marketplace jual beli akun game terpercaya di Indonesia. Kami menjamin proses transaksi aman, penyerahan kredensial akun instan otomatis via sistem, dan garansi anti-hackback seumur hidup.
@@ -281,7 +281,7 @@
                 <!-- Col 3: Pembayaran QRIS -->
                 <div>
                     <h3 class="text-slate-900 text-xs font-bold uppercase tracking-wider mb-4">Metode Pembayaran Resmi</h3>
-                    <p class="text-xs text-slate-500 mb-3">Dukungan QRIS instan dan transfer bank nasional via Midtrans:</p>
+                    <p class="text-xs text-slate-500 mb-3">Dukungan QRIS instan, e-wallet, dan transfer bank nasional:</p>
                     <div class="grid grid-cols-3 gap-2">
                         <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 flex items-center justify-center text-[11px] font-bold text-slate-700">
                             QRIS
@@ -307,10 +307,10 @@
 
             <!-- Bottom Copyright -->
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
-                <p>&copy; {{ date('Y') }} JB GAME. Hak Cipta Dilindungi.</p>
+                <p>&copy; {{ date('Y') }} ANDRA JB. Hak Cipta Dilindungi.</p>
                 <div class="flex space-x-6">
                     <span class="text-slate-600 font-medium">Aman & Terverifikasi</span>
-                    <span class="text-slate-600 font-medium">Didukung oleh Midtrans Payment Gateway</span>
+                    <span class="text-slate-600 font-medium">Sistem Pembayaran QRIS Otomatis Terverifikasi</span>
                 </div>
             </div>
         </div>

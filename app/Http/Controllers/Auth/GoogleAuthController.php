@@ -22,11 +22,11 @@ class GoogleAuthController extends Controller
         if (empty($clientId) || empty($clientSecret)) {
             return redirect()->route('login')->with(
                 'error',
-                'Login Google belum aktif karena GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET belum diisi di file .env.'
+                'Login Google memerlukan GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET di file .env. Silakan isi kredensial Google Console Anda atau masuk menggunakan formulir di bawah.'
             );
         }
 
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     /**
@@ -36,12 +36,16 @@ class GoogleAuthController extends Controller
     {
         try {
             /** @var \Laravel\Socialite\Two\User $googleUser */
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
         } catch (Exception $e) {
-            return redirect()->route('login')->with(
-                'error',
-                'Proses login dengan Google dibatalkan atau terjadi kesalahan. Silakan coba kembali.'
-            );
+            try {
+                $googleUser = Socialite::driver('google')->user();
+            } catch (Exception $fallbackEx) {
+                return redirect()->route('login')->with(
+                    'error',
+                    'Proses login dengan Google dibatalkan atau terjadi kesalahan. Silakan coba kembali.'
+                );
+            }
         }
 
         if (empty($googleUser->getEmail())) {
@@ -79,6 +83,13 @@ class GoogleAuthController extends Controller
         // If user is admin (Answer 2B), redirect directly to Filament Admin Dashboard
         if ($user->role === 'admin') {
             return redirect()->intended('/admin');
+        }
+
+        // Ensure customer never gets dumped into an admin URL stored in session
+        $intended = session()->get('url.intended');
+        if ($intended && str_contains($intended, '/admin')) {
+            session()->forget('url.intended');
+            return redirect()->route('home')->with('success', 'Selamat datang, ' . $user->name . '!');
         }
 
         return redirect()->intended(route('home'))->with('success', 'Selamat datang, ' . $user->name . '!');

@@ -46,4 +46,28 @@ class FilamentAdminTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('admin');
     }
+
+    public function test_admin_user_can_access_product_create_page(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/products/create');
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_user_can_access_products_list(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/products');
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_user_can_access_orders_list(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/orders');
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_user_can_access_users_list(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/admin/users');
+        $response->assertStatus(200);
+    }
 }

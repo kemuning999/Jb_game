@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-6 text-center">
-        <h2 class="text-xl font-extrabold text-slate-900">Daftar Akun JB GAME</h2>
+        <h2 class="text-xl font-extrabold text-slate-900">Daftar Akun ANDRA JB</h2>
         <p class="text-xs text-slate-500 mt-1">Buat akun untuk mulai membeli akun game impianmu secara aman</p>
     </div>
 

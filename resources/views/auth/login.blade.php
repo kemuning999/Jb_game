@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6 text-center">
         <h2 class="text-xl font-extrabold text-slate-900">Selamat Datang Kembali</h2>
-        <p class="text-xs text-slate-500 mt-1">Masuk ke akun JB GAME Anda untuk melanjutkan transaksi</p>
+        <p class="text-xs text-slate-500 mt-1">Masuk ke akun ANDRA JB Anda untuk melanjutkan transaksi</p>
     </div>
 
     <!-- Session Status & Flash Error -->

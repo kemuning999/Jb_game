@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
-use App\Services\MidtransService;
+use App\Services\BuatQrisService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +13,11 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-    protected MidtransService $midtransService;
+    protected BuatQrisService $buatQrisService;
 
-    public function __construct(MidtransService $midtransService)
+    public function __construct(BuatQrisService $buatQrisService)
     {
-        $this->midtransService = $midtransService;
+        $this->buatQrisService = $buatQrisService;
     }
 
     public function show($slug)
@@ -63,19 +63,19 @@ class CheckoutController extends Controller
             $user->update(['phone' => $validated['buyer_phone']]);
         }
 
-        // Check if there is an existing pending order by this user for this product with snap token
+        // Check if there is an existing pending order by this user for this product
         $existingOrder = Order::where('user_id', $user->id)
             ->where('product_id', $product->id)
             ->where('payment_status', 'pending')
             ->latest()
             ->first();
 
-        if ($existingOrder && !empty($existingOrder->snap_token)) {
+        if ($existingOrder && !empty($existingOrder->qris_url)) {
             return redirect()->route('orders.show', $existingOrder->order_number);
         }
 
-        // Generate unique order number (e.g. JB-20260929-A1B2C)
-        $orderNumber = 'JB-' . date('Ymd') . '-' . strtoupper(Str::random(5));
+        // Generate unique order number (e.g. AJB-20260929-A1B2C)
+        $orderNumber = 'AJB-' . date('Ymd') . '-' . strtoupper(Str::random(5));
 
         $order = DB::transaction(function () use ($user, $product, $validated, $orderNumber) {
             return Order::create([
@@ -92,14 +92,14 @@ class CheckoutController extends Controller
             ]);
         });
 
-        // Generate Midtrans Snap Token
+        // Initialize dynamic QRIS via BuatQris
         try {
-            $snapToken = $this->midtransService->createSnapToken($order);
+            $this->buatQrisService->createQris($order);
         } catch (Exception $e) {
-            return redirect()->route('orders.show', $order->order_number)
-                ->with('warning', 'Pesanan berhasil dibuat, namun pembayaran gagal diinisialisasi otomatis: ' . $e->getMessage());
+            // Handled gracefully, order view will display QR or instructions
         }
 
-        return redirect()->route('orders.show', $order->order_number);
+        return redirect()->route('orders.show', $order->order_number)
+            ->with('success', 'Pesanan berhasil dibuat! Silakan scan kode QRIS untuk menyelesaikan pembayaran.');
     }
 }

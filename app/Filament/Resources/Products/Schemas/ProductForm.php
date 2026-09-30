@@ -7,7 +7,6 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Set;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -47,7 +46,7 @@ class ProductForm
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state ?? '') . '-' . Str::random(4))),
+                            ->afterStateUpdated(fn ($set, ?string $state) => $set('slug', Str::slug($state ?? '') . '-' . Str::random(4))),
 
                         Grid::make(2)
                             ->components([
@@ -61,6 +60,8 @@ class ProductForm
                                     ->label('Harga Jual (Rp)')
                                     ->numeric()
                                     ->prefix('Rp')
+                                    ->minValue(1000)
+                                    ->helperText('Batas minimum pembayaran QRIS resmi di Indonesia adalah Rp 1.000')
                                     ->required(),
                             ]),
 
@@ -82,7 +83,7 @@ class ProductForm
                             ->image()
                             ->directory('products/thumbnails')
                             ->imageEditor()
-                            ->required(),
+                            ->nullable(),
 
                         FileUpload::make('images')
                             ->label('Galeri Screenshot Akun (Bisa pilih banyak)')
