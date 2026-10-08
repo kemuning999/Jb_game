@@ -29,4 +29,19 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+            \Illuminate\Support\Facades\Cache::forget('home_counts_stats');
+            \Illuminate\Support\Facades\Cache::forget('active_categories_list');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_categories_count');
+            \Illuminate\Support\Facades\Cache::forget('home_counts_stats');
+            \Illuminate\Support\Facades\Cache::forget('active_categories_list');
+        });
+    }
 }

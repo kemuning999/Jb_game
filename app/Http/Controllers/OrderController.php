@@ -132,4 +132,35 @@ class OrderController extends Controller
         return redirect()->route('orders.show', $order->order_number)
             ->with('info', 'Pesanan #' . $order->order_number . ' telah berhasil dibatalkan.');
     }
+
+    /**
+     * Buyer manual payment confirmation (marks as paid and reveals credentials)
+     */
+    public function confirmPayment(Request $request, $order_number)
+    {
+        $user = Auth::user();
+
+        $order = Order::with('product')->where('order_number', $order_number)->firstOrFail();
+
+        if ($order->user_id !== $user->id && $user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki hak akses.');
+        }
+
+        if (!$order->isPaid()) {
+            $order->update([
+                'payment_status' => 'paid',
+                'order_status' => 'completed',
+                'payment_type' => 'qris',
+                'paid_at' => now(),
+                'notes' => 'Pembayaran dikonfirmasi via QRIS.',
+            ]);
+
+            if ($order->product && $order->product->status !== 'sold') {
+                $order->product->update(['status' => 'sold']);
+            }
+        }
+
+        return redirect()->route('orders.show', $order->order_number)
+            ->with('success', 'Pembayaran QRIS berhasil dikonfirmasi! Data akun game Anda sudah terbuka di bawah.');
+    }
 }

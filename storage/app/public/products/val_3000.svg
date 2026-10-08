@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="valBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="50%" stop-color="#0f0f12" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="valRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4655" />
+      <stop offset="100%" stop-color="#ba1a28" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#valBg)" />
+
+  <circle cx="680" cy="140" r="170" fill="#ff4655" opacity="0.2" filter="blur(40px)" />
+
+  <rect x="40" y="40" width="120" height="34" rx="17" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.2" />
+  <text x="100" y="62" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="2">VALORANT</text>
+
+  <rect x="175" y="40" width="115" height="34" rx="17" fill="#ff4655" fill-opacity="0.2" stroke="#ff4655" stroke-width="1.5" />
+  <text x="232" y="62" fill="#ff4655" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="900" text-anchor="middle">TEST ORDER</text>
+
+  <text x="40" y="145" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="900">VALORANT READY RANKED</text>
+  <text x="40" y="185" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600">Level 20 • Unranked Competitive Ready • First Mail Clean</text>
+
+  <g transform="translate(40, 220)">
+    <rect x="0" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="70" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">LEVEL AKUN</text>
+    <text x="70" y="58" fill="#ff4655" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">LEVEL 20</text>
+
+    <rect x="155" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="225" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">SERVER</text>
+    <text x="225" y="58" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">ASIA (ID/SG)</text>
+
+    <rect x="310" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="380" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">STATUS EMAIL</text>
+    <text x="380" y="58" fill="#4ade80" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">FIRST EMAIL</text>
+  </g>
+
+  <!-- Valorant V Logo Visual -->
+  <g transform="translate(560, 160)">
+    <polygon points="50,10 110,140 85,140 25,10" fill="url(#valRed)" filter="drop-shadow(0 15px 30px rgba(255,70,85,0.4))" />
+    <polygon points="120,10 145,10 85,140 60,140" fill="#ffffff" />
+  </g>
+
+  <rect x="0" y="420" width="800" height="80" fill="#000000" fill-opacity="0.4" />
+  <text x="40" y="468" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">HARGA TEST PEMBELIAN</text>
+  <text x="760" y="470" fill="#ff4655" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="900" text-anchor="end">Rp 3.000</text>
+</svg>

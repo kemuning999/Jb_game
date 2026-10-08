@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::where('is_active', true)->get();
+        $categories = Cache::remember('active_categories_list', 120, fn () => Category::where('is_active', true)->get());
 
         $query = Product::with('category');
 

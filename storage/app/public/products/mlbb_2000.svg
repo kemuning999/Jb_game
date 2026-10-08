@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="mlbbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1128" />
+      <stop offset="50%" stop-color="#101f42" />
+      <stop offset="100%" stop-color="#050a17" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe259" />
+      <stop offset="100%" stop-color="#ffa751" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#mlbbBg)" />
+
+  <!-- Hexagon Grid Pattern -->
+  <g opacity="0.12" stroke="#4facfe" stroke-width="1.5" fill="none">
+    <polygon points="100,50 150,75 150,125 100,150 50,125 50,75" />
+    <polygon points="220,50 270,75 270,125 220,150 170,125 170,75" />
+    <polygon points="340,50 390,75 390,125 340,150 290,125 290,75" />
+    <polygon points="160,155 210,180 210,230 160,255 110,230 110,180" />
+    <polygon points="280,155 330,180 330,230 280,255 230,230 230,180" />
+    <polygon points="650,300 700,325 700,375 650,400 600,375 600,325" />
+    <polygon points="530,300 580,325 580,375 530,400 480,375 480,325" />
+  </g>
+
+  <!-- Ambient Glow Circles -->
+  <circle cx="680" cy="120" r="180" fill="#4facfe" opacity="0.2" filter="blur(40px)" />
+  <circle cx="120" cy="400" r="150" fill="#ffa751" opacity="0.15" filter="blur(40px)" />
+
+  <!-- Top Brand Tag -->
+  <rect x="40" y="40" width="160" height="34" rx="17" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.2" />
+  <text x="120" y="62" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="2">MOBILE LEGENDS</text>
+
+  <rect x="215" y="40" width="115" height="34" rx="17" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1.5" />
+  <text x="272" y="62" fill="#34d399" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="900" text-anchor="middle">TEST ORDER</text>
+
+  <!-- Big Title -->
+  <text x="40" y="145" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="900">STARTER ACCOUNT MLBB</text>
+  <text x="40" y="185" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600">Level 15 • 15 Hero Ready Ranked • All Clean Bind</text>
+
+  <!-- Specification Badges -->
+  <g transform="translate(40, 220)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="70" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">STATUS BIND</text>
+    <text x="70" y="58" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">MONSEP</text>
+
+    <!-- Badge 2 -->
+    <rect x="155" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="225" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">TOTAL HERO</text>
+    <text x="225" y="58" fill="#fbbf24" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">15 HERO</text>
+
+    <!-- Badge 3 -->
+    <rect x="310" y="0" width="140" height="75" rx="16" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="380" y="32" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">STATUS AKUN</text>
+    <text x="380" y="58" fill="#34d399" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" text-anchor="middle">ANTI HB 100%</text>
+  </g>
+
+  <!-- Right Visual Card Emblem (Rank Shield) -->
+  <g transform="translate(560, 160)">
+    <!-- Glow -->
+    <circle cx="100" cy="100" r="90" fill="#ffa751" opacity="0.25" filter="blur(20px)" />
+    <!-- Shield -->
+    <path d="M100,20 L170,55 L160,140 L100,185 L40,140 L30,55 Z" fill="url(#goldGrad)" stroke="#ffffff" stroke-width="3" filter="drop-shadow(0 15px 25px rgba(0,0,0,0.5))" />
+    <!-- Inner Star -->
+    <polygon points="100,60 112,88 142,90 118,110 126,140 100,122 74,140 82,110 58,90 88,88" fill="#ffffff" opacity="0.95" />
+    <text x="100" y="165" fill="#0f172a" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="900" text-anchor="middle" letter-spacing="1">ELITE RANK</text>
+  </g>
+
+  <!-- Bottom Price Ribbon -->
+  <rect x="0" y="420" width="800" height="80" fill="#000000" fill-opacity="0.4" />
+  <text x="40" y="468" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">HARGA SPESIAL TEST BELI</text>
+  <text x="760" y="470" fill="#4ade80" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="900" text-anchor="end">Rp 2.000</text>
+</svg>

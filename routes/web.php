@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{order_number}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/{order_number}/status', [OrderController::class, 'checkStatus'])->name('orders.status');
     Route::post('/orders/{order_number}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/orders/{order_number}/confirm-payment', [OrderController::class, 'confirmPayment'])->name('orders.confirm-payment');
     Route::post('/orders/{order_number}/simulate-pay', [BuatQrisController::class, 'simulatePay'])->name('orders.simulate-pay');
 
     // Dashboard redirects to orders

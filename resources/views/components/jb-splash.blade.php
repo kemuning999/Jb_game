@@ -38,21 +38,6 @@
                      class="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-25deg] transform -translate-x-[250%] pointer-events-none transition-transform duration-1000 ease-in-out"></div>
             </div>
         </div>
-
-        <!-- Typography: ANDRA JB & Tagline -->
-        <div id="splash-text-container" class="mt-6 text-center space-y-1 opacity-0 transform translate-y-3 transition-all duration-600 ease-out">
-            <span class="block text-xl sm:text-2xl font-black tracking-widest text-slate-900 uppercase">
-                ANDRA JB
-            </span>
-            <span class="block text-[11px] font-bold tracking-[0.3em] text-slate-400 uppercase">
-                White Premium Gaming Marketplace
-            </span>
-        </div>
-
-        <!-- Micro Loading Shimmer Indicator -->
-        <div id="splash-shimmer-bar" class="w-28 h-1 rounded-full bg-slate-100 overflow-hidden mt-6 opacity-0 transition-opacity duration-500">
-            <div class="w-full h-full bg-slate-900 rounded-full animate-[shimmer_1.5s_infinite]"></div>
-        </div>
     </div>
 </div>
 
@@ -70,8 +55,6 @@
     const splashEmblemBadge = document.getElementById('splash-emblem-badge');
     const splashLightStreak = document.getElementById('splash-light-streak');
     const splashPulseRing = document.getElementById('splash-pulse-ring');
-    const splashText = document.getElementById('splash-text-container');
-    const shimmerBar = document.getElementById('splash-shimmer-bar');
     const navbarLogoBadge = document.getElementById('navbar-logo-badge');
     const navbarBrandText = document.getElementById('navbar-brand-text');
 
@@ -98,9 +81,6 @@
     setTimeout(() => {
         splashEmblemBadge.style.opacity = '1';
         splashEmblemBadge.style.transform = 'scale(1.08)';
-        splashText.style.opacity = '1';
-        splashText.style.transform = 'translateY(0)';
-        shimmerBar.style.opacity = '1';
     }, 200);
 
     // 2. (t = 900ms): Light streak menyapu melewati logo JB
@@ -138,11 +118,6 @@
         const deltaX = (targetRect.left + targetRect.width / 2) - (badgeRect.left + badgeRect.width / 2);
         const deltaY = (targetRect.top + targetRect.height / 2) - (badgeRect.top + badgeRect.height / 2);
         const scaleFactor = targetRect.width / badgeRect.width;
-
-        // Hilangkan teks pembantu splash secara halus
-        splashText.style.opacity = '0';
-        splashText.style.transform = 'translateY(10px)';
-        shimmerBar.style.opacity = '0';
 
         // Animasikan Emblem meluncur tepat ke posisi navbar
         splashEmblemBadge.style.transition = 'all 750ms cubic-bezier(0.16, 1, 0.3, 1)';

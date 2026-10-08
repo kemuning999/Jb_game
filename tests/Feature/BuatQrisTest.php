@@ -147,6 +147,21 @@ class BuatQrisTest extends TestCase
         $showResponse->assertSee($this->product->account_username);
     }
 
+    public function test_confirm_payment_marks_order_as_paid_and_reveals_credentials(): void
+    {
+        $response = $this->actingAs($this->user)->post('/orders/' . $this->order->order_number . '/confirm-payment');
+
+        $response->assertRedirect('/orders/' . $this->order->order_number);
+
+        $this->order->refresh();
+        $this->assertEquals('paid', $this->order->payment_status);
+        $this->assertEquals('completed', $this->order->order_status);
+
+        $showResponse = $this->actingAs($this->user)->get('/orders/' . $this->order->order_number);
+        $showResponse->assertStatus(200);
+        $showResponse->assertSee($this->product->account_username);
+    }
+
     public function test_checkout_process_creates_order_and_redirects_to_order_show(): void
     {
         $newProduct = Product::create([

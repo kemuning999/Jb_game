@@ -578,14 +578,20 @@ function heroParallax() {
     return {
         offsetX: 0,
         offsetY: 0,
+        ticking: false,
         init() {
             window.addEventListener('mousemove', (e) => {
-                // Calculate distance from screen center (-1 to 1)
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                this.offsetX = (e.clientX - centerX);
-                this.offsetY = (e.clientY - centerY);
-            });
+                if (!this.ticking) {
+                    window.requestAnimationFrame(() => {
+                        const centerX = window.innerWidth / 2;
+                        const centerY = window.innerHeight / 2;
+                        this.offsetX = (e.clientX - centerX);
+                        this.offsetY = (e.clientY - centerY);
+                        this.ticking = false;
+                    });
+                    this.ticking = true;
+                }
+            }, { passive: true });
         }
     }
 }

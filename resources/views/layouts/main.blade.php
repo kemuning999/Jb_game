@@ -7,10 +7,11 @@
 
     <title>{{ $title ?? 'ANDRA JB' }} - Jual Beli Akun Game Aman & Terpercaya</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (non-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -20,10 +21,25 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
         [x-cloak] { display: none !important; }
+        /* Instant page transition loading bar */
+        .nav-loading-bar {
+            display: none;
+            position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 99999;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4, #4f46e5);
+            background-size: 200% 100%;
+            animation: navbarLoading 1.2s ease infinite;
+        }
+        .nav-loading-bar.active { display: block; }
+        @keyframes navbarLoading {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
     </style>
     @stack('styles')
 </head>
 <body class="flex flex-col min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+    <div class="nav-loading-bar" id="navLoadingBar"></div>
     <!-- Cinematic White Splash Screen with Logo JB Morph Transition -->
     <x-jb-splash />
 
@@ -317,5 +333,30 @@
     </footer>
 
     @stack('scripts')
+    <!-- Instant Navigation Loading Feedback -->
+    <script>
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href && link.origin === window.location.origin && !link.target && !link.hasAttribute('download')) {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                    const bar = document.getElementById('navLoadingBar');
+                    if (bar) bar.classList.add('active');
+                }
+            }
+        });
+    </script>
+
+    <!-- Browser Speculation Rules for Instant Navigation (Chrome/Edge prerender) -->
+    <script type="speculationrules">
+    {
+        "prerender": [
+            {
+                "source": "list",
+                "urls": ["{{ route('home') }}", "{{ route('products.index') }}", "{{ route('about') }}", "{{ route('contact') }}"]
+            }
+        ]
+    }
+    </script>
 </body>
 </html>

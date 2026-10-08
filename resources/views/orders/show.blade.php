@@ -97,44 +97,99 @@
 
                     <!-- Area Barcode QRIS -->
                     <div class="flex flex-col items-center justify-center py-4 bg-slate-50/70 rounded-2xl border border-slate-100 p-6 text-center space-y-4">
-                        <div class="relative bg-white p-3 rounded-2xl border-2 border-slate-200 shadow-xs">
+                        <!-- Auto Detect Badge -->
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span>Mendeteksi Pembayaran Otomatis</span>
+                        </div>
+
+                        <div class="relative bg-white p-3 rounded-2xl border-2 border-slate-200 shadow-sm max-w-xs w-full">
                             @php
                                 $displayQrUrl = !empty($order->qris_image) 
                                     ? $order->qris_image 
                                     : (!empty($order->qris_url) 
                                         ? $order->qris_url 
-                                        : 'https://api.qrserver.com/v1/create-qr-code/?size=350x350&margin=10&data=' . urlencode('https://buatqris.site/trx/' . ($order->qris_transaction_id ?? $order->order_number)));
+                                        : (!empty($order->payment_url) 
+                                            ? $order->payment_url 
+                                            : (file_exists(public_path('images/qris/qris-utama.jpeg')) 
+                                                ? asset('images/qris/qris-utama.jpeg') 
+                                                : asset('images/qris/qris-utama.jpeg'))));
                             @endphp
-                            <img src="{{ $displayQrUrl }}" alt="QRIS {{ $order->order_number }}" class="w-60 h-60 object-contain mx-auto rounded-lg">
+                            <a href="{{ $displayQrUrl }}" target="_blank" title="Klik untuk memperbesar QRIS">
+                                <img src="{{ $displayQrUrl }}" alt="QRIS {{ $order->order_number }}" class="w-full max-h-80 object-contain mx-auto rounded-xl hover:scale-[1.02] transition-transform duration-200">
+                            </a>
+                            <div class="mt-2 text-[10px] text-slate-400 font-medium">Klik gambar untuk memperbesar</div>
                         </div>
 
                         <div>
                             <span class="text-xs text-slate-500 font-medium block">Total Pembayaran Pas:</span>
-                            <span class="text-2xl font-black text-indigo-600">{{ $order->formatted_total }}</span>
-                            <span class="text-[11px] text-slate-400 block mt-0.5">Nama Merchant: {{ config('buatqris.umkm_name', 'ANDRA JB') }}</span>
+                            <span class="text-3xl font-black text-indigo-600 tracking-tight">{{ $order->formatted_total }}</span>
+                            <span class="text-[11px] text-slate-500 font-bold block mt-1">Merchant: ANDRA JB Official</span>
+                        </div>
+
+                        <!-- Petunjuk Singkat Pembayaran -->
+                        <div class="w-full max-w-md bg-white p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 text-slate-600">
+                            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+                                <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Cara Pembayaran:</span>
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1.5 pl-1 text-[11px] leading-relaxed">
+                                <li>Buka aplikasi <strong>m-Banking</strong> atau <strong>E-Wallet</strong> Anda (BCA, Mandiri, BRI, DANA, GoPay, OVO, ShopeePay, dll).</li>
+                                <li>Pilih menu <strong>Scan / Bayar QRIS</strong> dan scan barcode di atas.</li>
+                                <li>Pastikan nominal transfer pas: <strong class="text-indigo-600">{{ $order->formatted_total }}</strong>.</li>
+                                <li>Setelah transfer berhasil, sistem akan <strong>otomatis mendeteksi</strong> pembayaran Anda dalam beberapa detik dan langsung membuka kredensial akun game Anda!</li>
+                            </ol>
                         </div>
 
                         <!-- Logo E-Wallet & Bank Pendukung -->
-                        <div class="pt-2 flex flex-wrap justify-center items-center gap-2 max-w-sm text-[11px] font-bold text-slate-600">
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">BCA</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Mandiri</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">BRI</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">GoPay</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">DANA</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">OVO</span>
-                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">ShopeePay</span>
+                        <div class="pt-1 flex flex-wrap justify-center items-center gap-2 max-w-sm text-[11px] font-bold text-slate-600">
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">BCA</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">Mandiri</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">BRI</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">GoPay</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">DANA</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">OVO</span>
+                            <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-2xs">ShopeePay</span>
                         </div>
                     </div>
 
-                    <!-- Status Pengecekan Otomatis Realtime -->
-                    <div class="flex items-center justify-between p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 text-xs">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-3 h-3 rounded-full bg-indigo-600 animate-ping"></div>
-                            <span class="font-semibold text-slate-700">Mendeteksi pembayaran Anda secara otomatis...</span>
+                    <!-- Tombol Aksi Pembayaran Pembeli -->
+                    <div class="space-y-3 pt-2">
+                        <!-- Indikator Auto Polling -->
+                        <div class="flex items-center justify-center space-x-2 text-xs text-slate-500 py-1">
+                            <svg class="animate-spin h-3.5 w-3.5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                            <span>Mengecek pembayaran otomatis setiap 4 detik...</span>
                         </div>
-                        <button type="button" @click="checkManualStatus()" class="font-bold text-indigo-600 hover:text-indigo-800 underline">
-                            Cek Sekarang
-                        </button>
+
+                        <!-- Tombol Cek Manual & Backup -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <button type="button" @click="checkManualStatus()" class="w-full py-3 px-4 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition flex items-center justify-center space-x-1.5">
+                                <span>🔄 Cek Status Sekarang</span>
+                            </button>
+
+                            <form method="POST" action="{{ route('orders.confirm-payment', $order->order_number) }}" onsubmit="return confirm('Apakah Anda sudah menyelesaikan pembayaran QRIS sebesar {{ $order->formatted_total }}?')">
+                                @csrf
+                                <button type="submit" class="w-full py-3 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition flex items-center justify-center space-x-1.5">
+                                    <span>✓ Saya Sudah Bayar</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Tombol Kirim Bukti ke WhatsApp Admin -->
+                        <a href="https://wa.me/6281234567890?text={{ urlencode('Halo Admin ANDRA JB, saya sudah transfer QRIS untuk Order #' . $order->order_number . ' senilai ' . $order->formatted_total . '. Berikut bukti transfer saya:') }}" target="_blank" class="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+                            </svg>
+                            <span>Butuh Bantuan? Hubungi Admin WhatsApp</span>
+                        </a>
                     </div>
 
                     <!-- Tombol Batalkan Pesanan (Saat Status Masih Pending) -->
@@ -350,11 +405,11 @@
                     </div>
                     <div class="flex justify-between text-slate-600">
                         <span>Metode</span>
-                        <span class="font-semibold text-slate-800">QRIS Dinamis</span>
+                        <span class="font-semibold text-slate-800">QRIS (BuatQris Otomatis)</span>
                     </div>
                     <div class="flex justify-between text-slate-600">
-                        <span>Provider</span>
-                        <span class="font-semibold text-slate-800">BuatQris</span>
+                        <span>Pilihan Bayar</span>
+                        <span class="font-semibold text-slate-800">Semua Bank & E-Wallet (DANA, BCA, dll)</span>
                     </div>
                     @if($order->paid_at)
                         <div class="flex justify-between text-slate-600">

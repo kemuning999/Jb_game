@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -88,6 +89,25 @@ class OrdersTable
                     ]),
             ])
             ->recordActions([
+                Action::make('markAsPaid')
+                    ->label('Setujui Lunas')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalHeading('Konfirmasi Pembayaran QRIS')
+                    ->modalDescription('Apakah pembeli sudah benar-benar mentransfer dana ke QRIS Anda? Pesanan akan diubah menjadi Lunas dan kredensial akun akan diserahkan ke pembeli.')
+                    ->visible(fn ($record) => $record->payment_status === 'pending')
+                    ->action(function ($record) {
+                        $record->update([
+                            'payment_status' => 'paid',
+                            'order_status' => 'completed',
+                            'paid_at' => now(),
+                            'notes' => 'Pembayaran QRIS diverifikasi dan disetujui oleh Admin.',
+                        ]);
+                        if ($record->product) {
+                            $record->product->update(['status' => 'sold']);
+                        }
+                    }),
                 EditAction::make(),
             ])
             ->toolbarActions([
