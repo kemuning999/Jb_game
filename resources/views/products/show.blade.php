@@ -1,43 +1,43 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
     <!-- Breadcrumb -->
-    <nav class="flex items-center space-x-2 text-xs text-slate-500 mb-6 font-medium">
-        <a href="{{ route('home') }}" class="hover:text-indigo-600">Beranda</a>
+    <nav class="flex items-center space-x-2 text-xs text-slate-500 mb-4 sm:mb-6 font-medium overflow-x-auto scrollbar-none whitespace-nowrap">
+        <a href="{{ route('home') }}" class="hover:text-indigo-600 shrink-0">Beranda</a>
         <span>/</span>
-        <a href="{{ route('products.index') }}" class="hover:text-indigo-600">Produk</a>
+        <a href="{{ route('products.index') }}" class="hover:text-indigo-600 shrink-0">Produk</a>
         <span>/</span>
-        <a href="{{ route('products.index', ['category' => $product->category->slug]) }}" class="hover:text-indigo-600">{{ $product->category->name }}</a>
+        <a href="{{ route('products.index', ['category' => $product->category->slug]) }}" class="hover:text-indigo-600 shrink-0">{{ $product->category->name }}</a>
         <span>/</span>
         <span class="text-slate-800 truncate max-w-xs font-semibold">{{ $product->title }}</span>
     </nav>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
         <!-- Left: Images / Gallery -->
         <div class="lg:col-span-7 space-y-4" x-data="{ currentImg: '{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : '' }}' }">
             <!-- Main Photo -->
-            <div class="relative w-full h-80 sm:h-96 md:h-[420px] rounded-3xl bg-slate-100 border border-slate-200 overflow-hidden shadow-xs flex items-center justify-center">
+            <div class="relative w-full h-64 sm:h-96 md:h-[420px] rounded-2xl sm:rounded-3xl bg-slate-100 border border-slate-200 overflow-hidden shadow-xs flex items-center justify-center">
                 <template x-if="currentImg">
                     <img :src="currentImg" alt="{{ $product->title }}" class="w-full h-full object-cover">
                 </template>
                 <template x-if="!currentImg">
                     <div class="flex flex-col items-center justify-center text-slate-400">
-                        <svg class="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-12 h-12 sm:w-16 sm:h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span class="text-sm font-semibold">Foto Preview Akun</span>
+                        <span class="text-xs sm:text-sm font-semibold">Foto Preview Akun</span>
                     </div>
                 </template>
 
                 <!-- Status Badge Overlay -->
-                <div class="absolute top-4 right-4">
+                <div class="absolute top-3 right-3 sm:top-4 sm:right-4">
                     @if($product->isAvailable())
-                        <span class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-600 text-white shadow-xs">
+                        <span class="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-extrabold bg-emerald-600 text-white shadow-xs">
                             STOK TERSEDIA
                         </span>
                     @else
-                        <span class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-slate-700 text-white shadow-xs">
+                        <span class="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-extrabold bg-slate-700 text-white shadow-xs">
                             SUDAH TERJUAL
                         </span>
                     @endif
@@ -46,14 +46,14 @@
 
             <!-- Gallery Thumbnails (if available) -->
             @if($product->images && is_array($product->images) && count($product->images) > 0)
-                <div class="flex items-center space-x-3 overflow-x-auto pb-2">
+                <div class="flex items-center space-x-2 sm:space-x-3 overflow-x-auto pb-2 scrollbar-none">
                     @if($product->thumbnail)
-                        <button type="button" @click="currentImg = '{{ asset('storage/' . $product->thumbnail) }}'" class="w-20 h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button type="button" @click="currentImg = '{{ asset('storage/' . $product->thumbnail) }}'" class="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" class="w-full h-full object-cover">
                         </button>
                     @endif
                     @foreach($product->images as $img)
-                        <button type="button" @click="currentImg = '{{ asset('storage/' . $img) }}'" class="w-20 h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button type="button" @click="currentImg = '{{ asset('storage/' . $img) }}'" class="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                             <img src="{{ asset('storage/' . $img) }}" class="w-full h-full object-cover">
                         </button>
                     @endforeach
@@ -61,7 +61,7 @@
             @endif
 
             <!-- Security Assurance Notice -->
-            <div class="p-5 rounded-2xl bg-indigo-50/80 border border-indigo-200 text-xs text-indigo-900 flex items-start space-x-3.5">
+            <div class="p-4 sm:p-5 rounded-2xl bg-indigo-50/80 border border-indigo-200 text-xs text-indigo-900 flex items-start space-x-3 sm:space-x-3.5">
                 <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -73,48 +73,48 @@
         </div>
 
         <!-- Right: Info & Purchase Card -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-6">
+        <div class="lg:col-span-5 space-y-4 sm:space-y-6">
+            <div class="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-xs space-y-4 sm:space-y-6">
                 <!-- Category & Game -->
                 <div class="flex items-center space-x-2">
-                    <span class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
                         {{ $product->category->name }}
                     </span>
                     <span class="text-xs font-medium text-slate-400">ID: #{{ $product->id }}</span>
                 </div>
 
                 <!-- Product Title -->
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+                <h1 class="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
                     {{ $product->title }}
                 </h1>
 
                 <!-- Short Summary -->
                 @if($product->short_description)
-                    <p class="text-sm text-slate-600 bg-slate-50 p-3.5 rounded-xl border border-slate-200 leading-relaxed">
+                    <p class="text-xs sm:text-sm text-slate-600 bg-slate-50 p-3 sm:p-3.5 rounded-xl border border-slate-200 leading-relaxed">
                         {{ $product->short_description }}
                     </p>
                 @endif
 
                 <!-- Price Box -->
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                    <span class="text-xs text-slate-500 uppercase tracking-wider block font-bold">Harga Pas</span>
-                    <div class="text-3xl font-extrabold text-indigo-600 mt-1">
+                <div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-50 border border-slate-200">
+                    <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider block font-bold">Harga Pas</span>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 mt-0.5 sm:mt-1">
                         {{ $product->formatted_price }}
                     </div>
                 </div>
 
-                <!-- Action Button: Beli Sekarang -->
+                <!-- Action Button: Beli Sekarang (Desktop View) -->
                 <div>
                     @if($product->isAvailable())
                         @auth
-                            <a href="{{ route('checkout.show', $product->slug) }}" class="w-full flex items-center justify-center space-x-2 py-4 px-6 rounded-2xl text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+                            <a href="{{ route('checkout.show', $product->slug) }}" class="w-full flex items-center justify-center space-x-2 py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
                                 <span>Beli Sekarang</span>
                             </a>
                         @else
-                            <a href="{{ route('login', ['redirect' => route('checkout.show', $product->slug)]) }}" class="w-full flex items-center justify-center space-x-2 py-4 px-6 rounded-2xl text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 transition transform hover:-translate-y-0.5">
+                            <a href="{{ route('login', ['redirect' => route('checkout.show', $product->slug)]) }}" class="w-full flex items-center justify-center space-x-2 py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 transition transform hover:-translate-y-0.5">
                                 <span>Masuk Untuk Membeli</span>
                             </a>
                             <p class="text-center text-xs text-slate-500 mt-2 font-medium">
@@ -122,7 +122,7 @@
                             </p>
                         @endauth
                     @else
-                        <button disabled class="w-full py-4 px-6 rounded-2xl text-base font-bold bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed text-center">
+                        <button disabled class="w-full py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed text-center">
                             Akun Ini Telah Terjual
                         </button>
                         <p class="text-center text-xs text-slate-500 mt-2">
@@ -132,20 +132,20 @@
                 </div>
 
                 <!-- Feature checklist -->
-                <div class="pt-4 border-t border-slate-100 space-y-2.5 text-xs text-slate-600 font-medium">
-                    <div class="flex items-center space-x-2.5">
+                <div class="pt-3 sm:pt-4 border-t border-slate-100 space-y-2 sm:space-y-2.5 text-xs text-slate-600 font-medium">
+                    <div class="flex items-center space-x-2 sm:space-x-2.5">
                         <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Data akun otomatis tampil setelah bayar</span>
                     </div>
-                    <div class="flex items-center space-x-2.5">
+                    <div class="flex items-center space-x-2 sm:space-x-2.5">
                         <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Garansi anti-hackback seumur hidup</span>
                     </div>
-                    <div class="flex items-center space-x-2.5">
+                    <div class="flex items-center space-x-2 sm:space-x-2.5">
                         <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
@@ -157,11 +157,11 @@
     </div>
 
     <!-- Description & Specs Section -->
-    <div class="mt-14 p-8 rounded-3xl bg-white border border-slate-200 shadow-xs">
-        <h2 class="text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100">
+    <div class="mt-8 sm:mt-14 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-xs">
+        <h2 class="text-lg sm:text-xl font-bold text-slate-900 mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-slate-100">
             Deskripsi & Spesifikasi Lengkap Akun
         </h2>
-        <div class="prose max-w-none text-slate-700 text-sm leading-relaxed">
+        <div class="prose max-w-none text-slate-700 text-xs sm:text-sm leading-relaxed">
             @if($product->description)
                 {!! $product->description !!}
             @else
@@ -172,12 +172,13 @@
 
     <!-- Related Products -->
     @if($relatedProducts->isNotEmpty())
-        <div class="mt-16">
-            <h2 class="text-2xl font-extrabold text-slate-900 mb-6">Akun {{ $product->category->name }} Lainnya</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="mt-10 sm:mt-16">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4 sm:mb-6">Akun {{ $product->category->name }} Lainnya</h2>
+            <!-- 2 Kolom di Mobile, 2 di Tablet, 4 di Desktop -->
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 @foreach($relatedProducts as $related)
                     <div class="group bg-white rounded-2xl border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col">
-                        <div class="relative h-44 bg-slate-100 overflow-hidden">
+                        <div class="relative h-32 sm:h-44 bg-slate-100 overflow-hidden">
                             @if($related->thumbnail)
                                 <img src="{{ asset('storage/' . $related->thumbnail) }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             @else
@@ -186,13 +187,13 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
-                            <h3 class="font-bold text-slate-900 text-sm line-clamp-2" title="{{ $related->title }}">
+                        <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
+                            <h3 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-2" title="{{ $related->title }}">
                                 {{ $related->title }}
                             </h3>
-                            <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-                                <span class="font-extrabold text-indigo-600 text-sm">{{ $related->formatted_price }}</span>
-                                <a href="{{ route('products.show', $related->slug) }}" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-2 border-t border-slate-100 gap-1.5 sm:gap-0">
+                                <span class="font-extrabold text-indigo-600 text-xs sm:text-sm">{{ $related->formatted_price }}</span>
+                                <a href="{{ route('products.show', $related->slug) }}" class="w-full sm:w-auto px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition text-center">
                                     Beli
                                 </a>
                             </div>
@@ -202,5 +203,33 @@
             </div>
         </div>
     @endif
+
+    <!-- Mobile Sticky Bottom Checkout Bar (R-03 / antislop-layoutmobile) -->
+    <div class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2.5 pb-[max(env(safe-area-inset-bottom),0.6rem)] shadow-[0_-4px_25px_rgba(15,23,42,0.1)] flex items-center justify-between gap-3">
+        <div class="shrink-0">
+            <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block">Harga Pas</span>
+            <span class="text-base font-black text-indigo-600 leading-tight">{{ $product->formatted_price }}</span>
+        </div>
+        <div class="flex-1 flex justify-end">
+            @if($product->isAvailable())
+                @auth
+                    <a href="{{ route('checkout.show', $product->slug) }}" class="w-full sm:w-auto py-2.5 px-6 rounded-xl font-black text-xs bg-indigo-600 hover:bg-indigo-700 text-white text-center shadow-md shadow-indigo-600/20 active:scale-95 transition flex items-center justify-center space-x-1.5">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                        <span>Beli Sekarang</span>
+                    </a>
+                @else
+                    <a href="{{ route('login', ['redirect' => route('checkout.show', $product->slug)]) }}" class="w-full sm:w-auto py-2.5 px-5 rounded-xl font-black text-xs bg-indigo-600 hover:bg-indigo-700 text-white text-center shadow-md shadow-indigo-600/20 active:scale-95 transition">
+                        Masuk & Beli
+                    </a>
+                @endauth
+            @else
+                <button disabled class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-slate-100 text-slate-400 border border-slate-200 text-center">
+                    Akun Terjual
+                </button>
+            @endif
+        </div>
+    </div>
 </div>
 @endsection

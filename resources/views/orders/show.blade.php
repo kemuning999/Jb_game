@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="orderTracker()">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10" x-data="orderTracker()">
     <!-- Top Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-slate-200 gap-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 sm:pb-6 mb-6 sm:mb-8 border-b border-slate-200 gap-3 sm:gap-4">
         <div>
             <div class="flex items-center space-x-2">
-                <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Detail Pesanan</span>
+                <span class="text-[10px] sm:text-xs font-bold text-indigo-600 uppercase tracking-widest">Detail Pesanan</span>
                 <span class="text-xs text-slate-400">•</span>
-                <span class="text-xs text-slate-500 font-medium">{{ $order->created_at->format('d M Y, H:i') }} WIB</span>
+                <span class="text-[10px] sm:text-xs text-slate-500 font-medium">{{ $order->created_at->format('d M Y, H:i') }} WIB</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 flex items-center space-x-3">
-                <span>{{ $order->order_number }}</span>
-                <button type="button" @click="navigator.clipboard.writeText('{{ $order->order_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="text-slate-600 hover:text-slate-900 text-xs px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium transition">
+            <h1 class="text-xl sm:text-3xl font-extrabold text-slate-900 mt-1 flex flex-wrap items-center gap-2">
+                <span class="break-all">{{ $order->order_number }}</span>
+                <button type="button" @click="navigator.clipboard.writeText('{{ $order->order_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="text-slate-600 hover:text-slate-900 text-xs px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 font-medium transition shrink-0">
                     <span x-show="!copied">Salin No. Order</span>
                     <span x-show="copied" x-cloak class="text-emerald-600 font-bold">Tersalin!</span>
                 </button>
@@ -20,9 +20,9 @@
         </div>
 
         <!-- Status Badges -->
-        <div class="flex items-center space-x-2">
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <!-- Payment Badge -->
-            <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider
+            <span class="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-wider
                 @if($order->payment_status === 'paid') bg-emerald-50 text-emerald-700 border border-emerald-200
                 @elseif($order->payment_status === 'pending') bg-amber-50 text-amber-700 border border-amber-200 animate-pulse
                 @else bg-rose-50 text-rose-700 border border-rose-200 @endif">
@@ -30,7 +30,7 @@
             </span>
 
             <!-- Order Status Badge -->
-            <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider
+            <span class="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-wider
                 @if($order->order_status === 'completed') bg-emerald-50 text-emerald-700 border border-emerald-200
                 @elseif($order->order_status === 'processing') bg-cyan-50 text-cyan-700 border border-cyan-200
                 @elseif($order->order_status === 'pending') bg-amber-50 text-amber-700 border border-amber-200
@@ -74,31 +74,31 @@
 
             <!-- KOTAK QRIS BUATQRIS (TAMPIL DI WEBSITE - PILIHAN 1A) -->
             @if($order->payment_status === 'pending')
-                <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-6">
+                <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-sm space-y-5 sm:space-y-6">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-extrabold text-sm">
                                 QRIS
                             </div>
                             <div>
-                                <h2 class="text-base font-extrabold text-slate-900">Scan QRIS untuk Bayar</h2>
-                                <p class="text-xs text-slate-500">Mendukung semua bank dan e-wallet di Indonesia</p>
+                                <h2 class="text-sm sm:text-base font-extrabold text-slate-900">Scan QRIS untuk Bayar</h2>
+                                <p class="text-[11px] sm:text-xs text-slate-500">Mendukung semua bank dan e-wallet di Indonesia</p>
                             </div>
                         </div>
 
                         <!-- Timer Hitung Mundur -->
-                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold self-start sm:self-auto">
-                            <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="inline-flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold self-start sm:self-auto">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>Sisa Waktu: <span x-text="formatTime(timeLeft)">15:00</span></span>
+                            <span>Sisa: <span x-text="formatTime(timeLeft)">15:00</span></span>
                         </div>
                     </div>
 
                     <!-- Area Barcode QRIS -->
-                    <div class="flex flex-col items-center justify-center py-4 bg-slate-50/70 rounded-2xl border border-slate-100 p-6 text-center space-y-4">
+                    <div class="flex flex-col items-center justify-center py-3 sm:py-4 bg-slate-50/70 rounded-xl sm:rounded-2xl border border-slate-100 p-3 sm:p-6 text-center space-y-3 sm:space-y-4">
                         <!-- Auto Detect Badge -->
-                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] sm:text-xs font-bold">
                             <span class="relative flex h-2 w-2">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -106,7 +106,7 @@
                             <span>Mendeteksi Pembayaran Otomatis</span>
                         </div>
 
-                        <div class="relative bg-white p-3 rounded-2xl border-2 border-slate-200 shadow-sm max-w-xs w-full">
+                        <div class="relative bg-white p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border-2 border-slate-200 shadow-sm max-w-[260px] sm:max-w-xs w-full">
                             @php
                                 $displayQrUrl = !empty($order->qris_image) 
                                     ? $order->qris_image 
@@ -119,15 +119,15 @@
                                                 : asset('images/qris/qris-utama.jpeg'))));
                             @endphp
                             <a href="{{ $displayQrUrl }}" target="_blank" title="Klik untuk memperbesar QRIS">
-                                <img src="{{ $displayQrUrl }}" alt="QRIS {{ $order->order_number }}" class="w-full max-h-80 object-contain mx-auto rounded-xl hover:scale-[1.02] transition-transform duration-200">
+                                <img src="{{ $displayQrUrl }}" alt="QRIS {{ $order->order_number }}" class="w-full max-h-72 sm:max-h-80 object-contain mx-auto rounded-lg sm:rounded-xl hover:scale-[1.02] transition-transform duration-200">
                             </a>
-                            <div class="mt-2 text-[10px] text-slate-400 font-medium">Klik gambar untuk memperbesar</div>
+                            <div class="mt-1.5 text-[10px] text-slate-400 font-medium">Klik gambar untuk memperbesar</div>
                         </div>
 
                         <div>
-                            <span class="text-xs text-slate-500 font-medium block">Total Pembayaran Pas:</span>
-                            <span class="text-3xl font-black text-indigo-600 tracking-tight">{{ $order->formatted_total }}</span>
-                            <span class="text-[11px] text-slate-500 font-bold block mt-1">Merchant: ANDRA JB Official</span>
+                            <span class="text-[11px] sm:text-xs text-slate-500 font-medium block">Total Pembayaran Pas:</span>
+                            <span class="text-2xl sm:text-3xl font-black text-indigo-600 tracking-tight">{{ $order->formatted_total }}</span>
+                            <span class="text-[10px] sm:text-[11px] text-slate-500 font-bold block mt-0.5">Merchant: ANDRA JB Official</span>
                         </div>
 
                         <!-- Petunjuk Singkat Pembayaran -->
@@ -255,10 +255,10 @@
             @endif
 
             <!-- DATA AKUN GAME (CRITICAL SECTION) -->
-            <div class="p-6 sm:p-8 rounded-3xl @if($order->isPaid()) bg-emerald-50/40 border-2 border-emerald-300 @else bg-white border border-slate-200 @endif shadow-xs">
+            <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl @if($order->isPaid()) bg-emerald-50/40 border-2 border-emerald-300 @else bg-white border border-slate-200 @endif shadow-xs">
                 <div class="flex items-center justify-between pb-4 mb-5 border-b @if($order->isPaid()) border-emerald-200 @else border-slate-100 @endif">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl @if($order->isPaid()) bg-emerald-100 text-emerald-700 border border-emerald-200 @else bg-slate-100 text-slate-500 @endif flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-xl @if($order->isPaid()) bg-emerald-100 text-emerald-700 border border-emerald-200 @else bg-slate-100 text-slate-500 @endif flex items-center justify-center shrink-0">
                             @if($order->isPaid())
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
@@ -270,10 +270,10 @@
                             @endif
                         </div>
                         <div>
-                            <h3 class="text-base font-bold @if($order->isPaid()) text-emerald-900 @else text-slate-900 @endif">
+                            <h3 class="text-sm sm:text-base font-bold @if($order->isPaid()) text-emerald-900 @else text-slate-900 @endif">
                                 Data Kredensial Akun Game
                             </h3>
-                            <p class="text-xs @if($order->isPaid()) text-emerald-700 @else text-slate-500 @endif">
+                            <p class="text-[11px] sm:text-xs @if($order->isPaid()) text-emerald-700 @else text-slate-500 @endif">
                                 @if($order->isPaid())
                                     Pembayaran terverifikasi! Simpan data akun di bawah ini dengan aman.
                                 @else
@@ -288,22 +288,22 @@
                     <!-- Unlocked Credentials Box -->
                     <div class="space-y-4" x-data="{ showPass: false, userCopied: false, passCopied: false }">
                         <!-- Login Method -->
-                        <div class="p-3.5 rounded-xl bg-white border border-emerald-200 flex items-center justify-between text-xs">
+                        <div class="p-3 sm:p-3.5 rounded-xl bg-white border border-emerald-200 flex items-center justify-between text-xs">
                             <span class="text-slate-600 font-medium">Metode Login:</span>
                             <span class="font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-md">{{ $order->product->login_method ?? 'Moonton / Akun Game' }}</span>
                         </div>
 
                         <!-- Username / ID / Email -->
-                        <div class="p-4 rounded-2xl bg-white border border-emerald-200">
-                            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                        <div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-emerald-200">
+                            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
                                 Username / ID / Email Login:
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-mono text-base font-bold text-slate-900 select-all">
+                            <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
+                                <span class="font-mono text-sm sm:text-base font-bold text-slate-900 select-all break-all">
                                     {{ $accountDetails['username'] ?? 'Tersedia setelah verifikasi' }}
                                 </span>
                                 @if(!empty($accountDetails['username']))
-                                    <button type="button" @click="navigator.clipboard.writeText('{{ $accountDetails['username'] }}'); userCopied = true; setTimeout(() => userCopied = false, 2000)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold transition">
+                                    <button type="button" @click="navigator.clipboard.writeText('{{ $accountDetails['username'] }}'); userCopied = true; setTimeout(() => userCopied = false, 2000)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold transition shrink-0">
                                         <span x-show="!userCopied">Salin</span>
                                         <span x-show="userCopied" x-cloak class="text-emerald-600 font-bold">Tersalin!</span>
                                     </button>
@@ -312,15 +312,15 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="p-4 rounded-2xl bg-white border border-emerald-200">
-                            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                        <div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-emerald-200">
+                            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
                                 Password Akun:
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-mono text-base font-bold text-emerald-700 select-all" x-text="showPass ? '{{ $accountDetails['password'] }}' : '••••••••••••'">
+                            <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
+                                <span class="font-mono text-sm sm:text-base font-bold text-emerald-700 select-all break-all" x-text="showPass ? '{{ $accountDetails['password'] }}' : '••••••••••••'">
                                     ••••••••••••
                                 </span>
-                                <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-2 shrink-0">
                                     <button type="button" @click="showPass = !showPass" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition">
                                         <span x-text="showPass ? 'Sembunyikan' : 'Lihat'">Lihat</span>
                                     </button>
