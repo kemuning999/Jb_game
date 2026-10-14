@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -19,21 +20,25 @@ class CategoriesTable
             ->columns([
                 ImageColumn::make('icon')
                     ->label('Logo')
-                    ->circular(),
+                    ->circular()
+                    ->size(40),
 
                 TextColumn::make('name')
-                    ->label('Game')
+                    ->label('Nama Game')
+                    ->description(fn ($record) => $record->slug)
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold'),
 
                 TextColumn::make('slug')
                     ->searchable()
                     ->badge()
-                    ->color('gray'),
+                    ->color('gray')
+                    ->visibleFrom('md'),
 
                 TextColumn::make('products_count')
                     ->counts('products')
-                    ->label('Jumlah Akun')
+                    ->label('Akun')
                     ->badge()
                     ->color('info')
                     ->sortable(),
@@ -46,12 +51,19 @@ class CategoriesTable
                     ->label('Dibuat')
                     ->dateTime('d M Y, H:i')
                     ->sortable()
+                    ->visibleFrom('lg')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
+                Action::make('view_web')
+                    ->label('Lihat di Web')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->color('gray')
+                    ->url(fn ($record) => route('products.index', ['category' => $record->slug]))
+                    ->openUrlInNewTab(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])

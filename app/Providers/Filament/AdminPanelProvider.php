@@ -53,11 +53,26 @@ class AdminPanelProvider extends PanelProvider
                     .dark .footer-brand-text { color: #cbd5e1 !important; }
                     .fi-logo { display: inline-flex !important; align-items: center !important; }
                     .fi-logo svg, .fi-logo img { max-height: 2.5rem !important; }
-                    .fi-sidebar-header { min-height: 4rem; display: flex; align-items: center; }
+                    /* Mobile Admin Responsiveness & Touch Optimization */
+                    @media (max-width: 768px) {
+                        .fi-topbar { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+                        .fi-main-ctn { padding-left: 0.75rem !important; padding-right: 0.75rem !important; padding-bottom: 2rem !important; }
+                        .fi-ta-content { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+                        .fi-ta-table { min-width: 100% !important; }
+                        .fi-btn { min-height: 2.5rem !important; touch-action: manipulation !important; }
+                        .fi-input { font-size: 1rem !important; }
+                    }
                 </style>
             '))
             ->renderHook('panels::footer', fn () => view('filament.custom-footer'))
             ->sidebarCollapsibleOnDesktop()
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('Buka Website Toko')
+                    ->url('/', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->group('Etalase Toko')
+                    ->sort(99),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -65,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
+                \App\Filament\Widgets\QuickAdminGuide::class,
                 \App\Filament\Widgets\StatsOverview::class,
                 AccountWidget::class,
             ])

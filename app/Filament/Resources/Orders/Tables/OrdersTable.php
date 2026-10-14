@@ -18,30 +18,36 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
-                    ->label('No. Order')
+                    ->label('No. Pesanan')
+                    ->description(fn ($record) => $record->buyer_name . ' • ' . ($record->product?->title ?? 'Akun Game'))
                     ->searchable()
                     ->copyable()
                     ->weight('bold')
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap(),
 
                 TextColumn::make('buyer_name')
                     ->label('Pembeli')
-                    ->description(fn ($record) => $record->buyer_phone)
+                    ->description(fn ($record) => $record->buyer_phone ?: $record->buyer_email)
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->visibleFrom('md'),
 
                 TextColumn::make('product.title')
                     ->label('Akun Game')
+                    ->description(fn ($record) => $record->product?->category?->name)
                     ->limit(25)
-                    ->searchable(),
+                    ->searchable()
+                    ->visibleFrom('lg'),
 
                 TextColumn::make('total_amount')
-                    ->label('Harga')
+                    ->label('Total')
                     ->money('IDR', locale: 'id')
+                    ->weight('bold')
                     ->sortable(),
 
                 TextColumn::make('payment_status')
-                    ->label('Bayar')
+                    ->label('Status Bayar')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'paid' => 'success',
@@ -49,7 +55,13 @@ class OrdersTable
                         'failed', 'expired' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => strtoupper($state)),
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'paid' => 'LUNAS',
+                        'pending' => 'MENUNGGU QRIS',
+                        'failed' => 'GAGAL',
+                        'expired' => 'KEDALUWARSA',
+                        default => strtoupper($state),
+                    }),
 
                 TextColumn::make('order_status')
                     ->label('Status Order')
@@ -61,54 +73,74 @@ class OrdersTable
                         'cancelled' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'completed' => 'Selesai (Kredensial Terkirim)',
+                        'processing' => 'Diproses',
+                        'pending' => 'Menunggu Pembayaran',
+                        'cancelled' => 'Dibatalkan',
+                        default => ucfirst($state),
+                    })
+                    ->visibleFrom('md'),
 
                 TextColumn::make('created_at')
-                    ->label('Tanggal Order')
+                    ->label('Waktu Pesan')
                     ->dateTime('d M Y, H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->visibleFrom('lg'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('payment_status')
                     ->label('Filter Pembayaran')
                     ->options([
-                        'pending' => 'Pending',
-                        'paid' => 'Paid',
-                        'failed' => 'Failed',
-                        'expired' => 'Expired',
+                        'pending' => 'Menunggu QRIS (Pending)',
+                        'paid' => 'Sudah Lunas (Paid)',
+                        'failed' => 'Gagal (Failed)',
+                        'expired' => 'Kedaluwarsa (Expired)',
                     ]),
 
                 SelectFilter::make('order_status')
                     ->label('Filter Status Pesanan')
                     ->options([
-                        'pending' => 'Pending',
-                        'processing' => 'Processing',
-                        'completed' => 'Completed',
-                        'cancelled' => 'Cancelled',
+                        'pending' => 'Menunggu (Pending)',
+                        'processing' => 'Diproses (Processing)',
+                        'completed' => 'Selesai (Completed)',
+                        'cancelled' => 'Dibatalkan (Cancelled)',
                     ]),
             ])
             ->recordActions([
+                Action::make('chatBuyer')
+                    ->label('WA')
+                    ->tooltip('Hubungi pembeli lewat WhatsApp')
+                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                    ->color('success')
+                    ->url(fn ($record) => !empty($record->buyer_phone) 
+                        ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', preg_replace('/^0/', '62', $record->buyer_phone)) . '?text=' . urlencode('Halo kak ' . $record->buyer_name . ', saya admin ANDRA JB terkait pesanan akun game #' . $record->order_number . '.') 
+                        : '#', shouldOpenInNewTab: true)
+                    ->visible(fn ($record) => !empty($record->buyer_phone)),
+
                 Action::make('markAsPaid')
                     ->label('Setujui Lunas')
                     ->icon('heroicon-o-check-circle')
-                    ->color('success')
+                    ->color('primary')
                     ->requiresConfirmation()
-                    ->modalHeading('Konfirmasi Pembayaran QRIS')
-                    ->modalDescription('Apakah pembeli sudah benar-benar mentransfer dana ke QRIS Anda? Pesanan akan diubah menjadi Lunas dan kredensial akun akan diserahkan ke pembeli.')
+                    ->modalHeading('Verifikasi Manual Pembayaran QRIS')
+                    ->modalDescription('Pastikan saldo pembayaran sudah benar-benar masuk ke akun Anda. Setelah disetujui, akun game akan ditandai Terjual dan kredensial login otomatis dibuka untuk pembeli.')
+                    ->modalSubmitActionLabel('Ya, Setujui Lunas')
                     ->visible(fn ($record) => $record->payment_status === 'pending')
                     ->action(function ($record) {
                         $record->update([
                             'payment_status' => 'paid',
                             'order_status' => 'completed',
                             'paid_at' => now(),
-                            'notes' => 'Pembayaran QRIS diverifikasi dan disetujui oleh Admin.',
+                            'notes' => 'Pembayaran QRIS diverifikasi dan disetujui secara manual oleh Admin.',
                         ]);
                         if ($record->product) {
                             $record->product->update(['status' => 'sold']);
                         }
                     }),
-                EditAction::make(),
+
+                EditAction::make()->label('Rincian'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
