@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Respon instan tanpa delay 300ms pada sentuhan HP & desktop */
+html {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+}
+
+button, a, input, select, textarea, [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Umpan balik taktil instan saat tombol / tautan ditekan */
+a:active, button:active, [role="button"]:active {
+    transform: scale(0.97);
+    transition: transform 0.05s cubic-bezier(0.4, 0, 0.2, 1);
+}

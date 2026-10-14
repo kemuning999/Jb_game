@@ -40,8 +40,6 @@
 </head>
 <body class="flex flex-col min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
     <div class="nav-loading-bar" id="navLoadingBar"></div>
-    <!-- Cinematic White Splash Screen with Logo JB Morph Transition -->
-    <x-jb-splash />
 
     <!-- Navbar -->
     <header x-data="{ mobileMenu: false, userDropdown: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-xs">
@@ -396,27 +394,65 @@
     </nav>
 
     @stack('scripts')
-    <!-- Instant Navigation Loading Feedback -->
+    <!-- Fast Click & Instant Navigation System -->
     <script>
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link && link.href && link.origin === window.location.origin && !link.target && !link.hasAttribute('download')) {
-                const href = link.getAttribute('href');
-                if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-                    const bar = document.getElementById('navLoadingBar');
-                    if (bar) bar.classList.add('active');
+        (function() {
+            // Loading feedback bar
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (link && link.href && link.origin === window.location.origin && !link.target && !link.hasAttribute('download')) {
+                    const href = link.getAttribute('href');
+                    if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                        const bar = document.getElementById('navLoadingBar');
+                        if (bar) bar.classList.add('active');
+                    }
                 }
+            });
+
+            // Instant Prefetch on touchstart (HP) / mouseenter (PC)
+            // Saat jari pertama kali menyentuh link, browser langsung mengunduh HTML di latar belakang sehingga saat jari diangkat (klik), halaman sudah siap
+            const prefetched = new Set();
+            function prefetchUrl(url) {
+                if (!url || prefetched.has(url)) return;
+                try {
+                    const u = new URL(url, window.location.origin);
+                    if (u.origin !== window.location.origin) return;
+                    if (u.pathname.startsWith('/logout') || u.pathname.startsWith('/admin') || u.pathname.includes('cancel')) return;
+                    prefetched.add(url);
+
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.href = url;
+                    document.head.appendChild(link);
+                } catch (e) {}
             }
-        });
+
+            document.addEventListener('touchstart', function(e) {
+                const a = e.target.closest('a');
+                if (a && a.href) prefetchUrl(a.href);
+            }, { passive: true });
+
+            document.addEventListener('mouseenter', function(e) {
+                const a = e.target.closest('a');
+                if (a && a.href) prefetchUrl(a.href);
+            }, true);
+        })();
     </script>
 
-    <!-- Browser Speculation Rules for Instant Navigation (Chrome/Edge prerender) -->
+    <!-- Native Browser Speculation Rules for Zero-Latency Navigation (Chrome & Edge Mobile/Desktop) -->
     <script type="speculationrules">
     {
         "prerender": [
             {
-                "source": "list",
-                "urls": ["{{ route('home') }}", "{{ route('products.index') }}", "{{ route('about') }}", "{{ route('contact') }}"]
+                "where": {
+                    "and": [
+                        { "href_matches": "/*" },
+                        { "not": { "href_matches": "/admin*" } },
+                        { "not": { "href_matches": "/logout*" } },
+                        { "not": { "href_matches": "/*cancel*" } }
+                    ]
+                },
+                "eagerness": "moderate"
             }
         ]
     }
