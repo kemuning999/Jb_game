@@ -9,9 +9,10 @@ cd /d "%~dp0"
 echo [1/2] Memastikan server Laravel berjalan di Port 8080...
 netstat -ano | findstr :8080 >nul
 if %errorlevel% neq 0 (
-    start "Laravel Backend (Port 8080)" /min php artisan serve --port=8080
+    set PHP_CLI_SERVER_WORKERS=4
+    start "Laravel Backend (Port 8080)" /min php artisan serve --port=8080 --no-reload
     timeout /t 3 /nobreak >nul
-    echo Server Laravel berhasil dimulai di latar belakang.
+    echo Server Laravel (4 Workers Multi-Thread) berhasil dimulai di latar belakang.
 ) else (
     echo Server Laravel di Port 8080 sudah aktif.
 )

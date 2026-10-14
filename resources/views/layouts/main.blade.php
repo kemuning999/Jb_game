@@ -21,25 +21,10 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
         [x-cloak] { display: none !important; }
-        /* Instant page transition loading bar */
-        .nav-loading-bar {
-            display: none;
-            position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 99999;
-            background: linear-gradient(90deg, #4f46e5, #06b6d4, #4f46e5);
-            background-size: 200% 100%;
-            animation: navbarLoading 1.2s ease infinite;
-        }
-        .nav-loading-bar.active { display: block; }
-        @keyframes navbarLoading {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
     </style>
     @stack('styles')
 </head>
 <body class="flex flex-col min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
-    <div class="nav-loading-bar" id="navLoadingBar"></div>
 
     <!-- Navbar -->
     <header x-data="{ mobileMenu: false, userDropdown: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-xs">
@@ -218,6 +203,7 @@
         </div>
     </header>
 
+    <div id="page-content" class="flex flex-col flex-grow">
     <!-- Flash Alerts -->
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
@@ -335,6 +321,7 @@
             </div>
         </div>
     </footer>
+    </div>
 
     <!-- App-Style Sticky Bottom Navigation Bar for Mobile (R-03 / antislop-layoutmobile) -->
     <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_25px_rgba(15,23,42,0.08)] pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-1.5 px-3">
@@ -394,68 +381,191 @@
     </nav>
 
     @stack('scripts')
-    <!-- Fast Click & Instant Navigation System -->
+    <!-- Zero-Loading Instant App Navigation System -->
     <script>
-        (function() {
-            // Loading feedback bar
-            document.addEventListener('click', function(e) {
-                const link = e.target.closest('a');
-                if (link && link.href && link.origin === window.location.origin && !link.target && !link.hasAttribute('download')) {
-                    const href = link.getAttribute('href');
-                    if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-                        const bar = document.getElementById('navLoadingBar');
-                        if (bar) bar.classList.add('active');
-                    }
+    (function() {
+        // 1. In-Memory Instant Page Cache
+        const pageCache = new Map();
+
+        // Simpan halaman awal ke dalam memory cache
+        const initialContent = document.getElementById('page-content');
+        if (initialContent) {
+            pageCache.set(window.location.href, {
+                html: initialContent.innerHTML,
+                title: document.title
+            });
+        }
+
+        // 2. Pre-cache rute utama saat idle (hanya 1x, tidak membebani server)
+        function preloadMainRoutes() {
+            const routes = [
+                "{{ route('home') }}",
+                "{{ route('products.index') }}",
+                "{{ route('about') }}",
+                "{{ route('contact') }}"
+            ];
+            routes.forEach(url => {
+                if (!pageCache.has(url)) {
+                    fetch(url, { priority: 'low' })
+                        .then(res => res.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const content = doc.getElementById('page-content');
+                            if (content) {
+                                pageCache.set(url, {
+                                    html: content.innerHTML,
+                                    title: doc.title
+                                });
+                            }
+                        })
+                        .catch(() => {});
+                }
+            });
+        }
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => setTimeout(preloadMainRoutes, 1000));
+        } else {
+            setTimeout(preloadMainRoutes, 1200);
+        }
+
+        // 3. Update status aktif pada Bottom Nav HP & Header Desktop seketika
+        function updateActiveNav(targetUrl) {
+            const targetPath = new URL(targetUrl, window.location.origin).pathname;
+
+            // Mobile Bottom Nav
+            document.querySelectorAll('nav.fixed a[href]').forEach(a => {
+                const aPath = new URL(a.href, window.location.origin).pathname;
+                const isMatch = (aPath === '/' && targetPath === '/') || (aPath !== '/' && targetPath.startsWith(aPath));
+                const iconBox = a.querySelector('div');
+
+                if (isMatch) {
+                    a.classList.add('text-indigo-600', 'font-bold');
+                    a.classList.remove('text-slate-500');
+                    if (iconBox) iconBox.classList.add('bg-indigo-50', 'text-indigo-600');
+                } else {
+                    a.classList.remove('text-indigo-600', 'font-bold');
+                    a.classList.add('text-slate-500');
+                    if (iconBox) iconBox.classList.remove('bg-indigo-50', 'text-indigo-600');
                 }
             });
 
-            // Instant Prefetch on touchstart (HP) / mouseenter (PC)
-            // Saat jari pertama kali menyentuh link, browser langsung mengunduh HTML di latar belakang sehingga saat jari diangkat (klik), halaman sudah siap
-            const prefetched = new Set();
-            function prefetchUrl(url) {
-                if (!url || prefetched.has(url)) return;
-                try {
-                    const u = new URL(url, window.location.origin);
-                    if (u.origin !== window.location.origin) return;
-                    if (u.pathname.startsWith('/logout') || u.pathname.startsWith('/admin') || u.pathname.includes('cancel')) return;
-                    prefetched.add(url);
+            // Desktop Nav Links
+            document.querySelectorAll('header nav a[href]').forEach(a => {
+                const aPath = new URL(a.href, window.location.origin).pathname;
+                const isMatch = (aPath === '/' && targetPath === '/') || (aPath !== '/' && targetPath.startsWith(aPath));
+                if (isMatch) {
+                    a.className = 'px-4 py-2 rounded-xl text-sm font-semibold transition bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-xs';
+                } else {
+                    a.className = 'px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100';
+                }
+            });
+        }
 
-                    const link = document.createElement('link');
-                    link.rel = 'prefetch';
-                    link.href = url;
-                    document.head.appendChild(link);
-                } catch (e) {}
+        // 4. Render konten baru ke DOM secara instan tanpa reload halaman
+        function renderPage(data, url, pushState = true) {
+            const container = document.getElementById('page-content');
+            if (!container) return;
+
+            // DOM Swap instan 0ms
+            container.innerHTML = data.html;
+            document.title = data.title;
+
+            if (pushState) {
+                window.history.pushState({ url }, '', url);
             }
 
-            document.addEventListener('touchstart', function(e) {
-                const a = e.target.closest('a');
-                if (a && a.href) prefetchUrl(a.href);
-            }, { passive: true });
+            updateActiveNav(url);
 
-            document.addEventListener('mouseenter', function(e) {
-                const a = e.target.closest('a');
-                if (a && a.href) prefetchUrl(a.href);
-            }, true);
-        })();
-    </script>
+            // Eksekusi script tag di halaman yang baru dimuat
+            container.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.textContent = oldScript.textContent;
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
 
-    <!-- Native Browser Speculation Rules for Zero-Latency Navigation (Chrome & Edge Mobile/Desktop) -->
-    <script type="speculationrules">
-    {
-        "prerender": [
-            {
-                "where": {
-                    "and": [
-                        { "href_matches": "/*" },
-                        { "not": { "href_matches": "/admin*" } },
-                        { "not": { "href_matches": "/logout*" } },
-                        { "not": { "href_matches": "/*cancel*" } }
-                    ]
-                },
-                "eagerness": "moderate"
+            // Re-inisialisasi Alpine.js agar dropdown, filter, dan komponen reaktif tetap berjalan
+            if (window.Alpine) {
+                window.Alpine.initTree(container);
             }
-        ]
-    }
+
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        // 5. Intercept klik tautan untuk navigasi instan tanpa loading
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (!link || !link.href) return;
+
+            // Jangan intercept link eksternal, download, atau target="_blank"
+            if (link.target || link.hasAttribute('download')) return;
+            const u = new URL(link.href, window.location.origin);
+            if (u.origin !== window.location.origin) return;
+
+            // Jangan intercept rute penting seperti admin, logout, atau pembayaran
+            const p = u.pathname;
+            if (p.startsWith('/admin') || p.startsWith('/logout') || p.startsWith('/auth') || p.includes('cancel') || p.includes('simulate') || p.includes('checkout')) {
+                return;
+            }
+            if (u.hash && u.pathname === window.location.pathname) {
+                return;
+            }
+
+            e.preventDefault();
+
+            // Jika ada di memory cache -> 0 MILIDETIK LANGSUNG TAMPIL!
+            if (pageCache.has(u.href)) {
+                renderPage(pageCache.get(u.href), u.href, true);
+                return;
+            }
+
+            // Jika belum di cache, ambil di background dan tampilkan mulus
+            fetch(u.href)
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const content = doc.getElementById('page-content');
+                    if (content) {
+                        const pageData = {
+                            html: content.innerHTML,
+                            title: doc.title
+                        };
+                        pageCache.set(u.href, pageData);
+                        renderPage(pageData, u.href, true);
+                    } else {
+                        window.location.href = u.href;
+                    }
+                })
+                .catch(() => {
+                    window.location.href = u.href;
+                });
+        });
+
+        // 6. Tombol Back / Forward di HP langsung tampil seketika dari cache
+        window.addEventListener('popstate', function() {
+            const curUrl = window.location.href;
+            if (pageCache.has(curUrl)) {
+                renderPage(pageCache.get(curUrl), curUrl, false);
+            } else {
+                fetch(curUrl)
+                    .then(res => res.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const content = doc.getElementById('page-content');
+                        if (content) {
+                            const pageData = { html: content.innerHTML, title: doc.title };
+                            pageCache.set(curUrl, pageData);
+                            renderPage(pageData, curUrl, false);
+                        }
+                    })
+                    .catch(() => window.location.reload());
+            }
+        });
+    })();
     </script>
 </body>
 </html>
