@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -138,9 +139,19 @@ class OrdersTable
                         if ($record->product) {
                             $record->product->update(['status' => 'sold']);
                         }
+
+                        Notification::make()
+                            ->success()
+                            ->title('Pembayaran Berhasil Disetujui!')
+                            ->body("Pesanan #{$record->order_number} telah disetujui lunas. Kredensial akun game otomatis terbuka untuk pembeli.")
+                            ->icon('heroicon-o-check-badge')
+                            ->duration(7000)
+                            ->send();
                     }),
 
-                EditAction::make()->label('Rincian'),
+                EditAction::make()
+                    ->label('Rincian')
+                    ->successNotificationTitle('Data pesanan berhasil diperbarui!'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

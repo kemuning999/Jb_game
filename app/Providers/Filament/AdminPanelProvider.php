@@ -53,6 +53,25 @@ class AdminPanelProvider extends PanelProvider
                     .dark .footer-brand-text { color: #cbd5e1 !important; }
                     .fi-logo { display: inline-flex !important; align-items: center !important; }
                     .fi-logo svg, .fi-logo img { max-height: 2.5rem !important; }
+                    /* Super Clear & Prominent Admin Notifications */
+                    .fi-no {
+                        z-index: 99999 !important;
+                    }
+                    .fi-no-notification {
+                        border-radius: 1rem !important;
+                        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+                        border: 2px solid rgba(16, 185, 129, 0.35) !important;
+                        backdrop-filter: blur(8px) !important;
+                    }
+                    .fi-no-notification-title {
+                        font-weight: 800 !important;
+                        font-size: 0.95rem !important;
+                    }
+                    .fi-no-notification-body {
+                        font-size: 0.85rem !important;
+                        margin-top: 0.2rem !important;
+                        line-height: 1.4 !important;
+                    }
                     /* Mobile Admin Responsiveness & Touch Optimization */
                     @media (max-width: 768px) {
                         .fi-topbar { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
@@ -61,6 +80,12 @@ class AdminPanelProvider extends PanelProvider
                         .fi-ta-table { min-width: 100% !important; }
                         .fi-btn { min-height: 2.5rem !important; touch-action: manipulation !important; }
                         .fi-input { font-size: 1rem !important; }
+                        .fi-no {
+                            top: 1rem !important;
+                            right: 0.75rem !important;
+                            left: 0.75rem !important;
+                            max-width: calc(100vw - 1.5rem) !important;
+                        }
                     }
                 </style>
             '))

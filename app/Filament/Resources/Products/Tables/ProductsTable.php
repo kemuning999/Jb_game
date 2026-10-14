@@ -87,12 +87,17 @@ class ProductsTable
                     ->color('gray')
                     ->url(fn ($record) => route('products.show', $record->slug), shouldOpenInNewTab: true),
 
-                EditAction::make()->label('Edit'),
-                DeleteAction::make()->label('Hapus'),
+                EditAction::make()
+                    ->label('Edit')
+                    ->successNotificationTitle('Data akun game berhasil diperbarui!'),
+                DeleteAction::make()
+                    ->label('Hapus')
+                    ->successNotificationTitle('Akun game berhasil dihapus!'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->successNotificationTitle('Data yang dipilih berhasil dihapus!'),
                 ]),
             ]);
     }

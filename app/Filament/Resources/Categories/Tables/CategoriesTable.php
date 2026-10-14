@@ -64,12 +64,17 @@ class CategoriesTable
                     ->color('gray')
                     ->url(fn ($record) => route('products.index', ['category' => $record->slug]))
                     ->openUrlInNewTab(),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->successNotificationTitle('Kategori game berhasil diperbarui!'),
+                DeleteAction::make()
+                    ->label('Hapus')
+                    ->successNotificationTitle('Kategori game berhasil dihapus!'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->successNotificationTitle('Kategori yang dipilih berhasil dihapus!'),
                 ]),
             ]);
     }

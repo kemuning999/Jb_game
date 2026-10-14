@@ -83,11 +83,14 @@ class UsersTable
                     })
                     ->openUrlInNewTab()
                     ->visible(fn ($record) => filled($record->phone)),
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->successNotificationTitle('Data pengguna berhasil diperbarui!'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->successNotificationTitle('Pengguna yang dipilih berhasil dihapus!'),
                 ]),
             ]);
     }
