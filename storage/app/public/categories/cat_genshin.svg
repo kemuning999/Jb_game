@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="genshinCatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="28" fill="url(#genshinCatGrad)" />
+  <!-- Primogem 4-pointed Star -->
+  <path d="M50 18 C50 36 64 50 82 50 C64 50 50 64 50 82 C50 64 36 50 18 50 C36 50 50 36 50 18 Z" fill="#fde047" stroke="#ffffff" stroke-width="2" />
+  <circle cx="50" cy="50" r="6" fill="#ffffff" />
+</svg>

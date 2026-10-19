@@ -10,17 +10,21 @@
     <!-- Google Fonts (non-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet"></noscript>
 
     <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         [x-cloak] { display: none !important; }
+        .content-visibility-auto {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 400px;
+        }
     </style>
     @stack('styles')
 </head>
@@ -396,39 +400,40 @@
             });
         }
 
-        // 2. Pre-cache rute utama saat idle (hanya 1x, tidak membebani server)
-        function preloadMainRoutes() {
-            const routes = [
-                "{{ route('home') }}",
-                "{{ route('products.index') }}",
-                "{{ route('about') }}",
-                "{{ route('contact') }}"
-            ];
-            routes.forEach(url => {
-                if (!pageCache.has(url)) {
-                    fetch(url, { priority: 'low' })
-                        .then(res => res.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const content = doc.getElementById('page-content');
-                            if (content) {
-                                pageCache.set(url, {
-                                    html: content.innerHTML,
-                                    title: doc.title
-                                });
-                            }
-                        })
-                        .catch(() => {});
-                }
-            });
+        // 2. Ultra-Lightweight Intent Prefetch (Hover & Touch)
+        function prefetchUrl(url) {
+            if (!url || pageCache.has(url)) return;
+            try {
+                const u = new URL(url, window.location.origin);
+                if (u.origin !== window.location.origin) return;
+                const p = u.pathname;
+                if (p.startsWith('/admin') || p.startsWith('/logout') || p.startsWith('/auth') || p.includes('checkout') || p.includes('cancel')) return;
+
+                fetch(url, { priority: 'low' })
+                    .then(res => res.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const content = doc.getElementById('page-content');
+                        if (content) {
+                            pageCache.set(url, {
+                                html: content.innerHTML,
+                                title: doc.title
+                            });
+                        }
+                    })
+                    .catch(() => {});
+            } catch (err) {}
         }
 
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => setTimeout(preloadMainRoutes, 1000));
-        } else {
-            setTimeout(preloadMainRoutes, 1200);
-        }
+        let prefetchTimer = null;
+        document.addEventListener('mouseover', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href) {
+                clearTimeout(prefetchTimer);
+                prefetchTimer = setTimeout(() => prefetchUrl(link.href), 100);
+            }
+        }, { passive: true });
 
         // 3. Update status aktif pada Bottom Nav HP & Header Desktop seketika
         function updateActiveNav(targetUrl) {

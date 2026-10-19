@@ -54,12 +54,14 @@ class Product extends Model
             \Illuminate\Support\Facades\Cache::forget('home_categories_count');
             \Illuminate\Support\Facades\Cache::forget('home_counts_stats');
             \Illuminate\Support\Facades\Cache::forget('active_categories_list');
+            \Illuminate\Support\Facades\Cache::forget('home_latest_products');
         });
 
         static::deleted(function () {
             \Illuminate\Support\Facades\Cache::forget('home_categories_count');
             \Illuminate\Support\Facades\Cache::forget('home_counts_stats');
             \Illuminate\Support\Facades\Cache::forget('active_categories_list');
+            \Illuminate\Support\Facades\Cache::forget('home_latest_products');
         });
     }
 

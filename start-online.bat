@@ -6,21 +6,34 @@ echo ===================================================================
 echo.
 cd /d "%~dp0"
 
-echo [1/2] Memastikan server Laravel berjalan di Port 8080...
-netstat -ano | findstr :8080 >nul
-if %errorlevel% neq 0 (
-    set PHP_CLI_SERVER_WORKERS=4
-    start "Laravel Backend (Port 8080)" /min php artisan serve --port=8080 --no-reload
-    timeout /t 3 /nobreak >nul
-    echo Server Laravel (4 Workers Multi-Thread) berhasil dimulai di latar belakang.
-) else (
-    echo Server Laravel di Port 8080 sudah aktif.
+echo [1/4] Menyiapkan port 8080...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080 ^| findstr LISTENING') do (
+    echo Menghentikan proses lama di Port 8080 - PID %%a...
+    taskkill /F /PID %%a >nul 2>&1
 )
+ping 127.0.0.1 -n 2 >nul
 
+echo [2/4] Mengoptimalkan cache performa (Routes, Views, Config)...
+call php artisan optimize >nul 2>&1
+
+echo [3/4] Memulai server Laravel Backend di Port 8080...
+start "LaravelBackend" /min php artisan serve --port=8080
+ping 127.0.0.1 -n 4 >nul
+
+echo Server Laravel berjalan di latar belakang Port 8080.
 echo.
-echo [2/2] Menghubungkan ke Cloudflare Tunnel (Protocol HTTP/2)...
-echo Link publik Anda akan muncul di bawah ini (salin link .trycloudflare.com):
+echo [4/4] Menghubungkan ke Cloudflare Tunnel Protocol HTTP/2...
+echo Link publik Anda akan muncul di bawah ini - salin link trycloudflare:
 echo ===================================================================
 echo.
+
 "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --protocol http2 --url http://127.0.0.1:8080
+
+echo.
+echo Menutup server Laravel latar belakang...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080 ^| findstr LISTENING') do (
+    taskkill /F /PID %%a >nul 2>&1
+)
+call php artisan optimize:clear >nul 2>&1
+echo Selesai.
 pause

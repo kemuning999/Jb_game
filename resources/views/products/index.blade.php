@@ -18,7 +18,7 @@
             <a href="{{ route('products.index', array_merge(request()->except(['category', 'page']), ['category' => $cat->slug])) }}" 
                class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition flex items-center space-x-1.5 {{ request('category') === $cat->slug ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300' }}">
                 @if($cat->icon)
-                    <img src="{{ asset('storage/' . $cat->icon) }}" alt="{{ $cat->name }}" class="w-3.5 h-3.5 object-contain">
+                    <img src="{{ asset('storage/' . $cat->icon) }}" alt="{{ $cat->name }}" class="w-3.5 h-3.5 object-contain" loading="lazy" decoding="async">
                 @endif
                 <span>{{ $cat->name }}</span>
             </a>
@@ -137,7 +137,7 @@
                     <!-- Thumbnail -->
                     <div class="relative h-36 sm:h-48 bg-slate-100 overflow-hidden">
                         @if($product->thumbnail)
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async">
                         @else
                             <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-indigo-50 p-2 sm:p-4 text-center">
                                 <svg class="w-8 h-8 sm:w-10 sm:h-10 text-indigo-400 mb-1 sm:mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

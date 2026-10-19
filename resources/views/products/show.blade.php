@@ -49,12 +49,12 @@
                 <div class="flex items-center space-x-2 sm:space-x-3 overflow-x-auto pb-2 scrollbar-none">
                     @if($product->thumbnail)
                         <button type="button" @click="currentImg = '{{ asset('storage/' . $product->thumbnail) }}'" class="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         </button>
                     @endif
                     @foreach($product->images as $img)
                         <button type="button" @click="currentImg = '{{ asset('storage/' . $img) }}'" class="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <img src="{{ asset('storage/' . $img) }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $img) }}" class="w-full h-full object-cover" loading="lazy" decoding="async">
                         </button>
                     @endforeach
                 </div>
@@ -115,7 +115,10 @@
                             </a>
                         @else
                             <a href="{{ route('login', ['redirect' => route('checkout.show', $product->slug)]) }}" class="w-full flex items-center justify-center space-x-2 py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl text-sm sm:text-base font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/20 transition transform hover:-translate-y-0.5">
-                                <span>Masuk Untuk Membeli</span>
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                </svg>
+                                <span>Beli Sekarang</span>
                             </a>
                             <p class="text-center text-xs text-slate-500 mt-2 font-medium">
                                 Belum punya akun? <a href="{{ route('register') }}" class="text-indigo-600 font-bold hover:underline">Daftar sekarang</a>
@@ -180,7 +183,7 @@
                     <div class="group bg-white rounded-2xl border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col">
                         <div class="relative h-32 sm:h-44 bg-slate-100 overflow-hidden">
                             @if($related->thumbnail)
-                                <img src="{{ asset('storage/' . $related->thumbnail) }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('storage/' . $related->thumbnail) }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400 text-xs font-semibold">
                                     No Image

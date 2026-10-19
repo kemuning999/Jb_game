@@ -41,6 +41,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // 3. Panggil Katalog Bersih (30 Produk dengan Foto Lengkap)
+        $this->call(CleanCatalogSeeder::class);
+        return;
+
         // 3. Kategori Game
         $categoriesData = [
             [
