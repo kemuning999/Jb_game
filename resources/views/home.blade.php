@@ -18,8 +18,8 @@
         <!-- HEADLINE UTAMA & CALL TO ACTION -->
         <div class="text-center max-w-3xl mx-auto space-y-4 sm:space-y-6 pt-2 sm:pt-6">
             
-            <!-- Sleek Badge -->
-            <div class="inline-flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white border border-slate-200/90 text-slate-800 text-[11px] sm:text-xs font-bold shadow-xs hover:border-slate-300 transition">
+            <!-- Sleek Badge (Apple Pill) -->
+            <div class="inline-flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full apple-pill text-slate-800 text-[11px] sm:text-xs font-bold">
                 <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-600 animate-pulse"></span>
                 <span class="tracking-wide">Marketplace Akun Game #1 Indonesia</span>
                 <span class="text-slate-300">•</span>
@@ -43,7 +43,7 @@
             <div class="pt-1 sm:pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto">
                 <!-- CTA 1: Lihat Produk -->
                 <a href="#produk-unggulan" 
-                   class="w-full sm:w-auto px-6 sm:px-9 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm tracking-wide bg-slate-950 hover:bg-slate-900 text-white shadow-lg shadow-slate-950/20 hover:shadow-2xl hover:shadow-slate-950/30 transition-all duration-200 transform hover:-translate-y-0.5 text-center flex items-center justify-center space-x-2">
+                   class="w-full sm:w-auto px-6 sm:px-9 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide bg-slate-950 hover:bg-slate-900 text-white shadow-lg shadow-slate-950/20 hover:shadow-2xl hover:shadow-slate-950/30 transition-all duration-200 transform hover:-translate-y-0.5 text-center flex items-center justify-center space-x-2">
                     <span>Lihat Akun Siap Pakai</span>
                     <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -52,7 +52,7 @@
 
                 <!-- CTA 2: Cara Kerja -->
                 <a href="#cara-kerja" 
-                   class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm tracking-wide bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-xs hover:border-slate-300 transition-all duration-200 text-center flex items-center justify-center space-x-2">
+                   class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-xs sm:text-sm tracking-wide apple-pill text-slate-800 hover:bg-white transition-all duration-200 text-center flex items-center justify-center space-x-2">
                     <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -60,21 +60,47 @@
                 </a>
             </div>
 
-            <!-- Stats Bar Minimalis & Mewah -->
+            <!-- Showcase Visual Landing Page (Apple Device Glass Frame Showcase) -->
+            <div class="pt-6 sm:pt-10 max-w-4xl mx-auto px-1">
+                <div class="relative group rounded-3xl sm:rounded-[36px] p-2 sm:p-4 apple-glass overflow-hidden">
+                    <!-- Ambient Frosted Lighting -->
+                    <div class="absolute -top-24 -left-24 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Inner Mockup Container -->
+                    <div class="relative rounded-2xl sm:rounded-[28px] overflow-hidden bg-slate-950 border border-white/20 shadow-2xl">
+                        <img src="{{ asset('images/hero-showcase.svg') }}" 
+                             alt="Etalase Akun Game ANDRA JB" 
+                             class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-[1.01]" 
+                             loading="eager" 
+                             fetchpriority="high"
+                             width="1200" 
+                             height="680">
+
+                        <!-- Apple Floating Glass Chip Inside Visual -->
+                        <div class="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 inline-flex items-center space-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full apple-pill text-[10px] sm:text-xs font-bold text-slate-900 shadow-md">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>Katalog Aktif: {{ $allAvailableCount }} Akun Siap Mabar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar Apple Glassmorphism -->
             <div class="pt-6 sm:pt-10 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto">
-                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center">
+                <div class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl apple-card text-center transition hover:bg-white/95">
                     <div class="text-xl sm:text-3xl font-black text-slate-900">{{ $allAvailableCount }}</div>
                     <div class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-0.5 sm:mt-1">Akun Ready</div>
                 </div>
-                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center">
+                <div class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl apple-card text-center transition hover:bg-white/95">
                     <div class="text-xl sm:text-3xl font-black text-slate-900">{{ $soldCount }}+</div>
                     <div class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-0.5 sm:mt-1">Terjual Sukses</div>
                 </div>
-                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center">
+                <div class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl apple-card text-center transition hover:bg-white/95">
                     <div class="text-xl sm:text-3xl font-black text-indigo-600">0 Detik</div>
                     <div class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-0.5 sm:mt-1">Auto QRIS</div>
                 </div>
-                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center">
+                <div class="p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl apple-card text-center transition hover:bg-white/95">
                     <div class="text-xl sm:text-3xl font-black text-emerald-600">100%</div>
                     <div class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-0.5 sm:mt-1">Garansi Aman</div>
                 </div>
@@ -107,16 +133,16 @@
             </a>
         </div>
 
-        <!-- Filter Cepat Kategori Game (Tap Langsung Berubah) -->
+        <!-- Filter Cepat Kategori Game (Apple Glass Pills) -->
         <div class="flex items-center space-x-2 overflow-x-auto pb-3 mb-6 sm:mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
             <a href="{{ route('home') }}#produk-unggulan" 
-               class="shrink-0 px-4 py-2 rounded-full text-xs font-bold transition flex items-center space-x-1.5 {{ !request('category') ? 'bg-slate-950 text-white shadow-xs' : 'bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200' }}">
+               class="shrink-0 px-4 py-2 rounded-full text-xs font-bold transition flex items-center space-x-1.5 {{ !request('category') ? 'bg-slate-950 text-white shadow-xs' : 'apple-pill text-slate-700 hover:bg-white' }}">
                 <span>Semua Game</span>
                 <span class="text-[10px] {{ !request('category') ? 'text-slate-300' : 'text-slate-500' }}">({{ $allAvailableCount }})</span>
             </a>
             @foreach($categories as $cat)
                 <a href="{{ route('home', ['category' => $cat->slug]) }}#produk-unggulan" 
-                   class="shrink-0 px-3.5 py-2 rounded-full text-xs font-bold transition flex items-center space-x-2 {{ request('category') === $cat->slug ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300' }}">
+                   class="shrink-0 px-3.5 py-2 rounded-full text-xs font-bold transition flex items-center space-x-2 {{ request('category') === $cat->slug ? 'bg-indigo-600 text-white shadow-xs' : 'apple-pill text-slate-700 hover:bg-white' }}">
                     @if($cat->icon)
                         <img src="{{ asset('storage/' . $cat->icon) }}" alt="{{ $cat->name }}" class="w-4 h-4 object-contain" loading="lazy" decoding="async">
                     @endif
@@ -127,8 +153,8 @@
         </div>
 
         @if($latestProducts->isEmpty())
-            <div class="text-center py-12 sm:py-20 bg-slate-50 rounded-2xl sm:rounded-3xl border border-slate-200">
-                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white border border-slate-200 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-slate-400 shadow-xs">
+            <div class="text-center py-12 sm:py-20 apple-card rounded-[22px] sm:rounded-3xl">
+                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white/80 border border-slate-200/80 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-slate-400 shadow-xs">
                     <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
@@ -137,10 +163,10 @@
                 <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-sm mx-auto">Akun baru sedang dalam proses kurasi dan verifikasi kredensial oleh admin.</p>
             </div>
         @else
-            <!-- 2 Kolom di Mobile, 2 di Tablet, 4 di Desktop -->
+            <!-- 2 Kolom di Mobile, 2 di Tablet, 4 di Desktop (Apple Frosted Glass) -->
             <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 @foreach($latestProducts as $product)
-                    <div class="group bg-white rounded-2xl sm:rounded-3xl border border-slate-200 hover:border-slate-400 hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 overflow-hidden flex flex-col transform hover:-translate-y-1">
+                    <div class="group apple-card rounded-[22px] sm:rounded-3xl hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 overflow-hidden flex flex-col transform hover:-translate-y-1">
                         
                         <!-- Thumbnail Foto Nyata Akun Game -->
                         <div class="relative h-36 sm:h-52 bg-slate-100 overflow-hidden">
@@ -157,9 +183,9 @@
                                 </div>
                             @endif
 
-                            <!-- Kategori Badge -->
+                            <!-- Kategori Badge (Apple Frosted Pill) -->
                             <div class="absolute top-2 left-2 sm:top-3.5 sm:left-3.5">
-                                <span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-extrabold bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200/80 shadow-2xs">
+                                <span class="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-extrabold bg-white/85 backdrop-blur-md text-slate-900 border border-white/80 shadow-xs">
                                     {{ $product->category->name }}
                                 </span>
                             </div>
@@ -167,11 +193,11 @@
                             <!-- Status Badge -->
                             <div class="absolute top-2 right-2 sm:top-3.5 sm:right-3.5">
                                 @if($product->isAvailable())
-                                    <span class="px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl text-[9px] sm:text-xs font-black bg-emerald-500 text-white shadow-2xs">
+                                    <span class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-black bg-emerald-500/90 backdrop-blur-md text-white shadow-xs border border-emerald-400/40">
                                         READY
                                     </span>
                                 @else
-                                    <span class="px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl text-[9px] sm:text-xs font-black bg-slate-600 text-white shadow-2xs">
+                                    <span class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-black bg-slate-700/90 backdrop-blur-md text-white shadow-xs border border-slate-600/40">
                                         TERJUAL
                                     </span>
                                 @endif
@@ -179,7 +205,7 @@
                         </div>
 
                         <!-- Info & Harga Akun -->
-                        <div class="p-3 sm:p-6 flex-1 flex flex-col justify-between space-y-2 sm:space-y-4">
+                        <div class="p-3 sm:p-5 flex-1 flex flex-col justify-between space-y-2 sm:space-y-4">
                             <div>
                                 <h3 class="font-extrabold text-slate-900 text-xs sm:text-base line-clamp-2 group-hover:text-indigo-600 transition-colors">
                                     {{ $product->title }}
@@ -192,14 +218,14 @@
                                 @endif
                             </div>
 
-                            <div class="pt-2 sm:pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
+                            <div class="pt-2 sm:pt-3 border-t border-slate-200/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
                                 <div>
                                     <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Harga</span>
                                     <span class="text-xs sm:text-lg font-black text-slate-950">{{ $product->formatted_price }}</span>
                                 </div>
 
                                 <a href="{{ route('products.show', $product->slug) }}" 
-                                   class="w-full sm:w-auto px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black bg-slate-950 hover:bg-indigo-600 text-white transition-colors duration-200 shadow-2xs text-center">
+                                   class="w-full sm:w-auto px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-black bg-slate-950 hover:bg-indigo-600 text-white transition-colors duration-200 shadow-xs text-center">
                                     Detail
                                 </a>
                             </div>
@@ -212,7 +238,7 @@
             <!-- Button Lihat Semua Katalog -->
             <div class="mt-8 sm:mt-12 text-center">
                 <a href="{{ route('products.index') }}" 
-                   class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-extrabold text-xs sm:text-sm bg-slate-950 hover:bg-indigo-600 text-white shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                   class="inline-flex items-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-extrabold text-xs sm:text-sm bg-slate-950 hover:bg-indigo-600 text-white shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
                     <span>Buka Semua Katalog Akun ({{ $allAvailableCount }})</span>
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -229,7 +255,7 @@
 <!-- ========================================================================= -->
 <section class="py-10 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 content-visibility-auto">
     <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-16 space-y-2 sm:space-y-3">
-        <div class="inline-flex items-center space-x-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full apple-pill text-slate-800 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase">
             <span>Standar Keamanan Tertinggi</span>
         </div>
         <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-slate-900">Kenapa Memilih ANDRA JB?</h2>
@@ -240,8 +266,8 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         <!-- Benefit 1 -->
-        <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:border-slate-400 hover:shadow-lg transition-all duration-300 space-y-2.5 sm:space-y-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+        <div class="p-5 sm:p-8 rounded-[24px] sm:rounded-3xl apple-card hover:shadow-xl hover:border-indigo-200 transition-all duration-300 space-y-3 sm:space-y-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-xs">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
@@ -253,8 +279,8 @@
         </div>
 
         <!-- Benefit 2 -->
-        <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:border-slate-400 hover:shadow-lg transition-all duration-300 space-y-2.5 sm:space-y-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+        <div class="p-5 sm:p-8 rounded-[24px] sm:rounded-3xl apple-card hover:shadow-xl hover:border-emerald-200 transition-all duration-300 space-y-3 sm:space-y-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shadow-xs">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                 </svg>
@@ -266,8 +292,8 @@
         </div>
 
         <!-- Benefit 3 -->
-        <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:border-slate-400 hover:shadow-lg transition-all duration-300 space-y-2.5 sm:space-y-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600">
+        <div class="p-5 sm:p-8 rounded-[24px] sm:rounded-3xl apple-card hover:shadow-xl hover:border-cyan-200 transition-all duration-300 space-y-3 sm:space-y-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600 shadow-xs">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
@@ -279,8 +305,8 @@
         </div>
 
         <!-- Benefit 4 -->
-        <div class="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:border-slate-400 hover:shadow-lg transition-all duration-300 space-y-2.5 sm:space-y-4">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
+        <div class="p-5 sm:p-8 rounded-[24px] sm:rounded-3xl apple-card hover:shadow-xl hover:border-amber-200 transition-all duration-300 space-y-3 sm:space-y-4">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shadow-xs">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -300,7 +326,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-16 space-y-2 sm:space-y-3">
-            <div class="inline-flex items-center space-x-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full apple-pill text-indigo-700 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase">
                 <span>Panduan Belanja</span>
             </div>
             <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-slate-900">Cara Kerja Transaksi</h2>
@@ -311,8 +337,8 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 relative">
             <!-- Step 1 -->
-            <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-2 sm:space-y-3 relative group hover:border-slate-400 transition">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
+            <div class="p-5 sm:p-6 rounded-[24px] sm:rounded-3xl apple-card flex flex-col items-center text-center space-y-2.5 sm:space-y-3 relative group hover:border-indigo-300 transition">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
                     01
                 </div>
                 <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm">Pilih Akun</h4>
@@ -320,8 +346,8 @@
             </div>
 
             <!-- Step 2 -->
-            <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-2 sm:space-y-3 relative group hover:border-slate-400 transition">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
+            <div class="p-5 sm:p-6 rounded-[24px] sm:rounded-3xl apple-card flex flex-col items-center text-center space-y-2.5 sm:space-y-3 relative group hover:border-indigo-300 transition">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
                     02
                 </div>
                 <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm">Checkout</h4>
@@ -329,8 +355,8 @@
             </div>
 
             <!-- Step 3 -->
-            <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-2 sm:space-y-3 relative group hover:border-slate-400 transition">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md shadow-indigo-600/20">
+            <div class="p-5 sm:p-6 rounded-[24px] sm:rounded-3xl apple-card flex flex-col items-center text-center space-y-2.5 sm:space-y-3 relative group hover:border-indigo-300 transition">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md shadow-indigo-600/20">
                     03
                 </div>
                 <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm">Bayar QRIS</h4>
@@ -338,8 +364,8 @@
             </div>
 
             <!-- Step 4 -->
-            <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-2 sm:space-y-3 relative group hover:border-slate-400 transition">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
+            <div class="p-5 sm:p-6 rounded-[24px] sm:rounded-3xl apple-card flex flex-col items-center text-center space-y-2.5 sm:space-y-3 relative group hover:border-indigo-300 transition">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md">
                     04
                 </div>
                 <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm">Auto Verifikasi</h4>
@@ -347,8 +373,8 @@
             </div>
 
             <!-- Step 5 -->
-            <div class="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-2 sm:space-y-3 relative group hover:border-slate-400 transition">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md shadow-emerald-600/20">
+            <div class="p-5 sm:p-6 rounded-[24px] sm:rounded-3xl apple-card flex flex-col items-center text-center space-y-2.5 sm:space-y-3 relative group hover:border-indigo-300 transition">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs sm:text-sm shadow-md shadow-emerald-600/20">
                     05
                 </div>
                 <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm">Akun Diterima</h4>
@@ -363,14 +389,14 @@
 <!-- 6. CALL TO ACTION (CTA MEWAH JELANG FOOTER)                              -->
 <!-- ========================================================================= -->
 <section class="py-10 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 content-visibility-auto">
-    <div class="relative overflow-hidden rounded-3xl sm:rounded-[40px] bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-6 sm:p-16 text-white text-center shadow-2xl">
+    <div class="relative overflow-hidden rounded-3xl sm:rounded-[40px] bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-6 sm:p-16 text-white text-center shadow-2xl border border-white/10">
         
         <!-- Ambient Glow -->
         <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"></div>
         <div class="absolute -left-20 -top-20 w-96 h-96 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 max-w-2xl mx-auto space-y-4 sm:space-y-6">
-            <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-black uppercase tracking-widest text-indigo-300">
+            <span class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-black uppercase tracking-widest text-indigo-300">
                 <span>Siap Naik Rank?</span>
             </span>
 
@@ -384,11 +410,11 @@
 
             <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <a href="{{ route('products.index') }}" 
-                   class="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm tracking-wide bg-white hover:bg-slate-100 text-slate-950 shadow-xl shadow-white/10 hover:shadow-2xl transition transform hover:-translate-y-0.5 text-center">
+                   class="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide bg-white hover:bg-slate-100 text-slate-950 shadow-xl shadow-white/10 hover:shadow-2xl transition transform hover:-translate-y-0.5 text-center">
                     Lihat Semua Produk
                 </a>
                 <a href="{{ route('contact') }}" 
-                   class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm tracking-wide bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition text-center">
+                   class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-xs sm:text-sm tracking-wide bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition text-center">
                     Hubungi Admin
                 </a>
             </div>

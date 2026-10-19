@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <title>{{ $title ?? 'ANDRA JB' }} - Jual Beli Akun Game Aman & Terpercaya</title>
 
@@ -19,19 +20,51 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         [x-cloak] { display: none !important; }
         .content-visibility-auto {
             content-visibility: auto;
             contain-intrinsic-size: 1px 400px;
         }
+
+        /* Apple Glassmorphism Design Tokens */
+        .apple-glass {
+            background: rgba(255, 255, 255, 0.78);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.04);
+        }
+        .apple-card {
+            background: rgba(255, 255, 255, 0.82);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
+        }
+        .apple-dock {
+            background: rgba(255, 255, 255, 0.84);
+            -webkit-backdrop-filter: blur(30px) saturate(190%);
+            backdrop-filter: blur(30px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.04);
+        }
+        .apple-pill {
+            background: rgba(255, 255, 255, 0.85);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
     </style>
     @stack('styles')
 </head>
 <body class="flex flex-col min-h-screen bg-[#f8fafc] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
 
-    <!-- Navbar -->
-    <header x-data="{ mobileMenu: false, userDropdown: false }" class="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-xs">
+    <!-- Navbar (Apple Frosted Glass) -->
+    <header x-data="{ mobileMenu: false, userDropdown: false }" class="sticky top-0 z-50 apple-glass border-b border-white/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Brand / Logo -->
@@ -156,49 +189,49 @@
             </div>
         </div>
 
-        <!-- Mobile Drawer Menu -->
-        <div x-show="mobileMenu" x-cloak x-transition class="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2">
-            <a href="{{ route('home') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold {{ request()->routeIs('home') ? 'bg-indigo-600 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+        <!-- Mobile Drawer Menu (Apple Frosted Glass) -->
+        <div x-show="mobileMenu" x-cloak x-transition class="md:hidden border-b border-white/60 apple-glass px-4 pt-3 pb-6 space-y-2 shadow-2xl rounded-b-3xl">
+            <a href="{{ route('home') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold {{ request()->routeIs('home') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100/70' }}">
                 Beranda
             </a>
-            <a href="{{ route('products.index') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold {{ request()->routeIs('products.*') ? 'bg-indigo-600 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+            <a href="{{ route('products.index') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold {{ request()->routeIs('products.*') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100/70' }}">
                 Katalog Akun
             </a>
-            <a href="{{ route('about') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold {{ request()->routeIs('about') ? 'bg-indigo-600 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+            <a href="{{ route('about') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold {{ request()->routeIs('about') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100/70' }}">
                 Tentang Kami
             </a>
-            <a href="{{ route('contact') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold {{ request()->routeIs('contact') ? 'bg-indigo-600 text-white' : 'text-slate-700 hover:bg-slate-100' }}">
+            <a href="{{ route('contact') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold {{ request()->routeIs('contact') ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100/70' }}">
                 Bantuan & Kontak
             </a>
 
-            <div class="border-t border-slate-200 pt-4 mt-3">
+            <div class="border-t border-slate-200/60 pt-4 mt-3">
                 @auth
                     <div class="px-3.5 py-2 text-xs text-slate-500">
                         Masuk sebagai <span class="font-semibold text-slate-900">{{ Auth::user()->name }}</span>
                     </div>
-                    <a href="{{ route('orders.index') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold text-indigo-700 hover:bg-indigo-50">
+                    <a href="{{ route('orders.index') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold text-indigo-700 hover:bg-indigo-50/70">
                         Pesanan Saya
                     </a>
                     @if(Auth::user()->role === 'admin')
-                        <a href="/admin" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold text-amber-700 hover:bg-amber-50">
+                        <a href="/admin" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold text-amber-700 hover:bg-amber-50/70">
                             Panel Admin
                         </a>
                     @endif
-                    <a href="{{ route('profile.edit') }}" class="block px-3.5 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">
+                    <a href="{{ route('profile.edit') }}" class="block px-3.5 py-2.5 rounded-2xl text-base font-semibold text-slate-700 hover:bg-slate-100/70">
                         Pengaturan Profil
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-left px-3.5 py-2.5 rounded-xl text-base font-semibold text-rose-600 hover:bg-rose-50">
+                        <button type="submit" class="w-full text-left px-3.5 py-2.5 rounded-2xl text-base font-semibold text-rose-600 hover:bg-rose-50/70">
                             Keluar (Log Out)
                         </button>
                     </form>
                 @else
                     <div class="grid grid-cols-2 gap-2 pt-2">
-                        <a href="{{ route('login') }}" class="w-full text-center px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200">
+                        <a href="{{ route('login') }}" class="w-full text-center px-4 py-2.5 rounded-2xl text-sm font-semibold bg-white/80 border border-slate-200/80 text-slate-800 hover:bg-white shadow-xs">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="w-full text-center px-4 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700">
+                        <a href="{{ route('register') }}" class="w-full text-center px-4 py-2.5 rounded-2xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-xs">
                             Daftar
                         </a>
                     </div>
@@ -327,12 +360,12 @@
     </footer>
     </div>
 
-    <!-- App-Style Sticky Bottom Navigation Bar for Mobile (R-03 / antislop-layoutmobile) -->
-    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_25px_rgba(15,23,42,0.08)] pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-1.5 px-3">
+    <!-- Apple-Style Floating Frosted Glass Dock for Mobile -->
+    <nav class="md:hidden fixed bottom-3 inset-x-4 z-40 max-w-sm mx-auto apple-dock rounded-full py-1.5 px-3">
         <div class="grid grid-cols-4 items-center">
             <!-- 1. Beranda -->
             <a href="{{ route('home') }}" class="flex flex-col items-center justify-center py-1 text-center transition group {{ request()->routeIs('home') ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <div class="p-1 rounded-xl transition {{ request()->routeIs('home') ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                <div class="p-1 rounded-full transition {{ request()->routeIs('home') ? 'bg-indigo-50 text-indigo-600 shadow-xs' : '' }}">
                     <svg class="w-5 h-5" fill="{{ request()->routeIs('home') ? 'currentColor' : 'none' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="{{ request()->routeIs('home') ? '1.5' : '2' }}">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
@@ -342,7 +375,7 @@
 
             <!-- 2. Katalog Akun -->
             <a href="{{ route('products.index') }}" class="flex flex-col items-center justify-center py-1 text-center transition group {{ request()->routeIs('products.*') ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <div class="p-1 rounded-xl transition {{ request()->routeIs('products.*') ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                <div class="p-1 rounded-full transition {{ request()->routeIs('products.*') ? 'bg-indigo-50 text-indigo-600 shadow-xs' : '' }}">
                     <svg class="w-5 h-5" fill="{{ request()->routeIs('products.*') ? 'currentColor' : 'none' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="{{ request()->routeIs('products.*') ? '1.5' : '2' }}">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -353,7 +386,7 @@
 
             <!-- 3. Pesanan / Transaksi -->
             <a href="{{ route('orders.index') }}" class="flex flex-col items-center justify-center py-1 text-center transition group {{ request()->routeIs('orders.*') ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                <div class="p-1 rounded-xl transition {{ request()->routeIs('orders.*') ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                <div class="p-1 rounded-full transition {{ request()->routeIs('orders.*') ? 'bg-indigo-50 text-indigo-600 shadow-xs' : '' }}">
                     <svg class="w-5 h-5" fill="{{ request()->routeIs('orders.*') ? 'currentColor' : 'none' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="{{ request()->routeIs('orders.*') ? '1.5' : '2' }}">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
@@ -364,7 +397,7 @@
             <!-- 4. Akun / Profil / Masuk -->
             @auth
                 <a href="{{ route('profile.edit') }}" class="flex flex-col items-center justify-center py-1 text-center transition group {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                    <div class="p-1 rounded-xl transition {{ request()->routeIs('profile.*') ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                    <div class="p-1 rounded-full transition {{ request()->routeIs('profile.*') ? 'bg-indigo-50 text-indigo-600 shadow-xs' : '' }}">
                         <div class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center uppercase border border-indigo-200">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
@@ -373,7 +406,7 @@
                 </a>
             @else
                 <a href="{{ route('login') }}" class="flex flex-col items-center justify-center py-1 text-center transition group {{ request()->routeIs('login') ? 'text-indigo-600 font-bold' : 'text-slate-500 hover:text-slate-800' }}">
-                    <div class="p-1 rounded-xl transition {{ request()->routeIs('login') ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                    <div class="p-1 rounded-full transition {{ request()->routeIs('login') ? 'bg-indigo-50 text-indigo-600 shadow-xs' : '' }}">
                         <svg class="w-5 h-5" fill="{{ request()->routeIs('login') ? 'currentColor' : 'none' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="{{ request()->routeIs('login') ? '1.5' : '2' }}">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>

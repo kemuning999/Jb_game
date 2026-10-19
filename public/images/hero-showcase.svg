@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680">
+  <defs>
+    <!-- Background Ambient Glows -->
+    <radialGradient id="appleGlow1" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#c084fc" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="appleGlow2" cx="70%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glass Gradients -->
+    <linearGradient id="glassFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.55" />
+    </linearGradient>
+    <linearGradient id="glassBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#e2e8f0" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3" />
+    </linearGradient>
+
+    <!-- Phone Screen Gradient -->
+    <linearGradient id="phoneScreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Card Accent Gradients -->
+    <linearGradient id="accentMlbb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="accentFf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+    <linearGradient id="goldBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="glassShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+    <filter id="phoneShadow" x="-20%" y="-10%" width="140%" height="130%">
+      <feDropShadow dx="0" dy="28" stdDeviation="36" flood-color="#0f172a" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="680" rx="36" fill="#f8fafc" />
+  <rect width="1200" height="680" rx="36" fill="url(#appleGlow1)" />
+  <rect width="1200" height="680" rx="36" fill="url(#appleGlow2)" />
+
+  <!-- Subtle Apple Grid Pattern -->
+  <g opacity="0.4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 6">
+    <line x1="200" y1="0" x2="200" y2="680" />
+    <line x1="400" y1="0" x2="400" y2="680" />
+    <line x1="600" y1="0" x2="600" y2="680" />
+    <line x1="800" y1="0" x2="800" y2="680" />
+    <line x1="1000" y1="0" x2="1000" y2="680" />
+    <line x1="0" y1="180" x2="1200" y2="180" />
+    <line x1="0" y1="360" x2="1200" y2="360" />
+    <line x1="0" y1="520" x2="1200" y2="520" />
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- CENTERPIECE: APPLE IPHONE SLEEK GLASS FRAME                    -->
+  <!-- ============================================================== -->
+  <g transform="translate(425, 40)" filter="url(#phoneShadow)">
+    <!-- Phone Titanium/Glass Body -->
+    <rect x="0" y="0" width="350" height="600" rx="48" fill="#0f172a" stroke="#cbd5e1" stroke-width="3" />
+    <!-- Inner Bezel -->
+    <rect x="8" y="8" width="334" height="584" rx="42" fill="#020617" />
+
+    <!-- OLED Screen Area -->
+    <rect x="14" y="14" width="322" height="572" rx="36" fill="url(#phoneScreenGrad)" />
+
+    <!-- Dynamic Island Pill -->
+    <rect x="125" y="24" width="100" height="26" rx="13" fill="#000000" />
+    <circle cx="205" cy="37" r="5" fill="#1e293b" />
+
+    <!-- Screen Content: ANDRA JB App Header -->
+    <g transform="translate(30, 68)">
+      <!-- Mini Brand Tag -->
+      <rect width="90" height="22" rx="11" fill="#4f46e5" fill-opacity="0.3" stroke="#818cf8" stroke-width="1" />
+      <text x="45" y="15" fill="#a5b4fc" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="1">ANDRA STORE</text>
+      
+      <text x="0" y="44" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="16" font-weight="900">Katalog Pilihan Ready</text>
+      <text x="0" y="58" fill="#94a3b8" font-family="-apple-system, system-ui, sans-serif" font-size="10" font-weight="500">Auto QRIS • Garansi Anti Hackback</text>
+    </g>
+
+    <!-- Screen Product Card 1: MLBB Mythic -->
+    <g transform="translate(30, 142)">
+      <rect width="290" height="150" rx="20" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      
+      <!-- Top Artwork banner inside card -->
+      <path d="M0 20 C0 8.95 8.95 0 20 0 L270 0 C281.05 0 290 8.95 290 20 L290 85 L0 85 Z" fill="url(#accentMlbb)" />
+      
+      <!-- Stars & Crown Artwork -->
+      <path d="M145 28 L152 42 L168 44 L156 54 L160 70 L145 62 L130 70 L134 54 L122 44 L138 42 Z" fill="#fbbf24" opacity="0.95" />
+      <circle cx="145" cy="49" r="6" fill="#ffffff" />
+
+      <!-- Badges on image -->
+      <rect x="12" y="12" width="90" height="20" rx="10" fill="#000000" fill-opacity="0.4" />
+      <text x="57" y="25" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="8" font-weight="800" text-anchor="middle">MOBILE LEGENDS</text>
+
+      <rect x="220" y="12" width="58" height="20" rx="10" fill="#10b981" />
+      <text x="249" y="25" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="900" text-anchor="middle">READY</text>
+
+      <!-- Card Title & Price -->
+      <text x="14" y="108" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="800">MLBB Mythic Calon Immortal</text>
+      <text x="14" y="122" fill="#94a3b8" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="500">Full Hero • Monsep Clean Bind</text>
+
+      <text x="14" y="140" fill="#fbbf24" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900">Rp 5.000</text>
+      <rect x="225" y="124" width="53" height="20" rx="10" fill="#4f46e5" />
+      <text x="251" y="137" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle">Beli</text>
+    </g>
+
+    <!-- Screen Product Card 2: Free Fire Master -->
+    <g transform="translate(30, 308)">
+      <rect width="290" height="150" rx="20" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      
+      <!-- Top Artwork banner inside card -->
+      <path d="M0 20 C0 8.95 8.95 0 20 0 L270 0 C281.05 0 290 8.95 290 20 L290 85 L0 85 Z" fill="url(#accentFf)" />
+      
+      <!-- Flame Emblem Artwork -->
+      <circle cx="145" cy="42" r="22" fill="#ffffff" fill-opacity="0.15" />
+      <path d="M145 22 C150 32 158 36 158 46 C158 56 150 64 145 66 C140 64 132 56 132 46 C132 36 140 32 145 22 Z" fill="#fef08a" />
+
+      <!-- Badges on image -->
+      <rect x="12" y="12" width="70" height="20" rx="10" fill="#000000" fill-opacity="0.4" />
+      <text x="47" y="25" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="8" font-weight="800" text-anchor="middle">FREE FIRE</text>
+
+      <rect x="220" y="12" width="58" height="20" rx="10" fill="#10b981" />
+      <text x="249" y="25" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="900" text-anchor="middle">READY</text>
+
+      <!-- Card Title & Price -->
+      <text x="14" y="108" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="800">FF Master Bintang 10 Clean</text>
+      <text x="14" y="122" fill="#94a3b8" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="500">AK Draco Lv.4 • Bundle Cobra</text>
+
+      <text x="14" y="140" fill="#fbbf24" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900">Rp 4.500</text>
+      <rect x="225" y="124" width="53" height="20" rx="10" fill="#4f46e5" />
+      <text x="251" y="137" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle">Beli</text>
+    </g>
+
+    <!-- Bottom Dock Bar inside screen -->
+    <rect x="20" y="490" width="310" height="52" rx="26" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+    <circle cx="65" cy="516" r="14" fill="#4f46e5" />
+    <text x="65" y="520" fill="#ffffff" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="900" text-anchor="middle">⚡</text>
+
+    <circle cx="155" cy="516" r="12" fill="#1e293b" />
+    <text x="155" y="520" fill="#94a3b8" font-family="-apple-system, system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">🎮</text>
+
+    <circle cx="245" cy="516" r="12" fill="#1e293b" />
+    <text x="245" y="520" fill="#94a3b8" font-family="-apple-system, system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">👤</text>
+
+    <!-- Specular Highlight Curve on Screen Glass -->
+    <path d="M14 14 L180 14 C120 120 70 300 20 480 L14 480 Z" fill="#ffffff" fill-opacity="0.04" />
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- LEFT FLOATING APPLE GLASS CARD: 100% GARANSI & DATA AMAN       -->
+  <!-- ============================================================== -->
+  <g transform="translate(60, 160)" filter="url(#glassShadow)">
+    <rect width="320" height="150" rx="28" fill="url(#glassFill)" stroke="url(#glassBorder)" stroke-width="2" />
+    
+    <!-- Verified Shield Icon Badge -->
+    <rect x="24" y="24" width="56" height="56" rx="20" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
+    <path d="M52 38 L64 43 C64 54 58 63 52 67 C46 63 40 54 40 43 Z" fill="#10b981" />
+    <path d="M48 52 L51 55 L57 48" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+    <text x="96" y="44" fill="#047857" font-family="-apple-system, system-ui, sans-serif" font-size="10" font-weight="800" letter-spacing="1">SECURITY SHIELD</text>
+    <text x="96" y="64" fill="#0f172a" font-family="-apple-system, system-ui, sans-serif" font-size="16" font-weight="900">Garansi Anti-Hackback</text>
+
+    <text x="24" y="105" fill="#475569" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="500">Semua akun tangan pertama terverifikasi.</text>
+    <text x="24" y="123" fill="#475569" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="500">Penggantian saldo 100% jika ada kendala.</text>
+  </g>
+
+  <!-- LEFT FLOATING PILL: 30 AKUN READY -->
+  <g transform="translate(100, 350)" filter="url(#glassShadow)">
+    <rect width="250" height="60" rx="30" fill="url(#glassFill)" stroke="url(#glassBorder)" stroke-width="2" />
+    <circle cx="45" cy="30" r="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+    <text x="45" y="34" fill="#6366f1" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900" text-anchor="middle">★</text>
+    <text x="75" y="27" fill="#0f172a" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900">30 Akun Ready</text>
+    <text x="75" y="44" fill="#64748b" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="600">Rp 3.000 s/d Rp 5.000</text>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- RIGHT FLOATING APPLE GLASS CARD: INSTANT QRIS 0 DETIK          -->
+  <!-- ============================================================== -->
+  <g transform="translate(820, 180)" filter="url(#glassShadow)">
+    <rect width="320" height="150" rx="28" fill="url(#glassFill)" stroke="url(#glassBorder)" stroke-width="2" />
+    
+    <!-- Lightning Bolt Badge -->
+    <rect x="24" y="24" width="56" height="56" rx="20" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5" />
+    <path d="M54 36 L44 50 L51 50 L48 64 L60 48 L53 48 Z" fill="#4f46e5" />
+
+    <text x="96" y="44" fill="#4338ca" font-family="-apple-system, system-ui, sans-serif" font-size="10" font-weight="800" letter-spacing="1">AUTO DELIVERY</text>
+    <text x="96" y="64" fill="#0f172a" font-family="-apple-system, system-ui, sans-serif" font-size="16" font-weight="900">Kredensial 0 Detik</text>
+
+    <text x="24" y="105" fill="#475569" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="500">Scan QRIS BCA, DANA, GoPay, OVO.</text>
+    <text x="24" y="123" fill="#475569" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="500">Email &amp; password langsung terbuka detik itu juga.</text>
+  </g>
+
+  <!-- RIGHT FLOATING PILL: MULTIPLATFORM GAMING -->
+  <g transform="translate(840, 370)" filter="url(#glassShadow)">
+    <rect width="270" height="60" rx="30" fill="url(#glassFill)" stroke="url(#glassBorder)" stroke-width="2" />
+    <circle cx="45" cy="30" r="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+    <text x="45" y="35" fill="#06b6d4" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900" text-anchor="middle">⚡</text>
+    <text x="75" y="27" fill="#0f172a" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="900">Multiplatform Support</text>
+    <text x="75" y="44" fill="#64748b" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="600">MLBB • FF • Roblox • Valo</text>
+  </g>
+
+</svg>
