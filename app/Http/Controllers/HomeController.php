@@ -25,7 +25,7 @@ class HomeController extends Controller
             });
         }
 
-        $latestProducts = $productsQuery->latest()->take(16)->get();
+        $latestProducts = $productsQuery->latest()->take(8)->get();
 
         $allAvailableCount = Product::where('status', 'available')->count();
         $soldCount = Product::where('status', 'sold')->count();
